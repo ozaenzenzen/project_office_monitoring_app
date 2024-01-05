@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/signin_page/signin_page.dart';
 import 'package:project_office_monitoring_app/support/app_theme.dart';
 
 class MyApp extends StatefulWidget {
@@ -11,7 +12,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool? isSignIn = false;
+  // bool? isSignIn = false;
+  bool? isSignIn = true;
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -26,7 +29,7 @@ class _MyAppState extends State<MyApp> {
           title: 'Vehicle Management Log',
           theme: AppTheme.theme,
           // home: const MainPage()
-          home: (isSignIn == true) ? const MainPage() : const MainPage(),
+          home: (isSignIn == true) ? const SignInPage() : const MainPage(),
         );
       },
     );
