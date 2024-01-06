@@ -9,6 +9,7 @@ class AppAppBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
   final bool? automaticallyImplyLeading;
+  final double elevation;
 
   const AppAppBarWidget({
     super.key,
@@ -17,6 +18,7 @@ class AppAppBarWidget extends StatefulWidget implements PreferredSizeWidget {
     this.actions,
     this.bottom,
     this.automaticallyImplyLeading,
+    this.elevation = 10,
   });
 
   @override
@@ -34,7 +36,7 @@ class _AppAppBarWidgetState extends State<AppAppBarWidget> {
         color: Colors.white,
       ),
       backgroundColor: AppColor.primary,
-      elevation: 10,
+      elevation: widget.elevation,
       shadowColor: const Color(0xff101828),
       centerTitle: true,
       automaticallyImplyLeading: widget.automaticallyImplyLeading ?? true,

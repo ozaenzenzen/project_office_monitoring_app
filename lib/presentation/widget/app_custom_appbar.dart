@@ -104,6 +104,7 @@ class AppCustomAppBarState extends State<AppCustomAppBar> {
             ),
             Text(
               widget.centerItemText ?? '',
+              textAlign: TextAlign.center,
               style: GoogleFonts.inter(
                 color: widget.color,
                 fontSize: widget.fontSize,
