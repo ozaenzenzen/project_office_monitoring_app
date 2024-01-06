@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_info.dart';
@@ -41,7 +42,7 @@ class _SignInPageState extends State<SignInPage> {
                         return Text(
                           // "Vehicle Log Apps Version 1.0.0+1",
                           // "Vehicle Log Apps Version ${AppInfo.appVersion}",
-                          "Vehicle Log Apps Version ${snapshot.data}",
+                          "Office Monitor App Version ${snapshot.data}",
                           style: AppTheme.theme.textTheme.bodySmall?.copyWith(
                             fontSize: 10.sp,
                             color: Colors.grey,
@@ -143,6 +144,14 @@ class _SignInPageState extends State<SignInPage> {
                     children: [
                       AppMainButtonWidget(
                         onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const MainPage();
+                              },
+                            ),
+                          );
                           // context.read<SigninBloc>().add(
                           //       SigninAction(
                           //         signInRequestModel: SignInRequestModel(
