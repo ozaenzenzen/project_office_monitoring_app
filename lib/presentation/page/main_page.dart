@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/home_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/log_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/monitor_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/profile_page/profile_page.dart';
-import 'package:project_office_monitoring_app/presentation/widget/app_appbar_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_custom_appbar.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 
@@ -60,28 +60,28 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.border,
-      appBar: AppAppBarWidget(
-        // title: 'Main Page',
-        title: '',
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const ProfilePage();
-                  },
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.person,
-            ),
-          )
-        ],
-      ),
+      // appBar: AppAppBarWidget(
+      //   // title: 'Main Page',
+      //   title: '',
+      //   elevation: 0,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) {
+      //               return const ProfilePage();
+      //             },
+      //           ),
+      //         );
+      //       },
+      //       icon: const Icon(
+      //         Icons.person,
+      //       ),
+      //     )
+      //   ],
+      // ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
@@ -104,7 +104,14 @@ class _MainPageState extends State<MainPage> {
         backgroundColor: AppColor.primary,
         elevation: 0,
         onPressed: () {
-          //
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return const CapturePage();
+              },
+            ),
+          );
         },
         child: Icon(
           Icons.camera_alt,
@@ -132,12 +139,12 @@ class _MainPageState extends State<MainPage> {
             text: "Home",
           ),
           AppCustomAppBarItem(
-            iconData: Icons.motorcycle,
-            text: "Vehicle",
+            iconData: Icons.monitor_heart,
+            text: "Monitor",
           ),
           AppCustomAppBarItem(
-            iconData: Icons.bar_chart,
-            text: "Stats",
+            iconData: Icons.wifi_protected_setup_rounded,
+            text: "Log",
           ),
           AppCustomAppBarItem(
             iconData: Icons.person,
