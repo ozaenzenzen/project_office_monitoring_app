@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/signup_page/signup_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_info.dart';
@@ -55,6 +56,13 @@ class _SignInPageState extends State<SignInPage> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Spacer(),
+                  Text(
+                    "Office Monitor App",
+                    style: AppTheme.theme.textTheme.displayMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   const Spacer(),
                   // SizedBox(height: 100.h),
                   // Align(
@@ -180,6 +188,14 @@ class _SignInPageState extends State<SignInPage> {
                           // Get.to(
                           //   () => const SignUpPage(),
                           // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const SignUpPage();
+                              },
+                            ),
+                          );
                         },
                         text: "Daftar",
                       ),
