@@ -21,6 +21,7 @@ class _MonitorPageState extends State<MonitorPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 24.h),
+            SizedBox(height: 12.h),
             Text(
               "Monitor Location",
               style: GoogleFonts.inter(

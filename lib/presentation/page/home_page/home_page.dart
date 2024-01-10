@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
+          SizedBox(height: 12.h),
           topSection(),
           headerSection(),
           SizedBox(height: 12.h),
