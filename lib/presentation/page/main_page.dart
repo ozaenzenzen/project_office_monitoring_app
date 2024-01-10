@@ -116,7 +116,7 @@ class _MainPageState extends State<MainPage> {
         child: Icon(
           Icons.camera_alt,
           color: AppColor.white,
-          size: 35.h,
+          size: 28.h,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

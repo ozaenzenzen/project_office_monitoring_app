@@ -40,22 +40,24 @@ class _LogPageState extends State<LogPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: AppColor.primary,
-          child: _tabBar,
-        ),
-        Expanded(
-          child: TabBarView(
-            controller: tabController,
-            children: [
-              listLogView(),
-              statsView(),
-            ],
+    return SafeArea(
+      child: Column(
+        children: [
+          Container(
+            color: AppColor.primary,
+            child: _tabBar,
           ),
-        ),
-      ],
+          Expanded(
+            child: TabBarView(
+              controller: tabController,
+              children: [
+                listLogView(),
+                statsView(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
