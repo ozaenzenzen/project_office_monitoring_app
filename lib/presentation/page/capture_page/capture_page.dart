@@ -17,7 +17,7 @@ class _CapturePageState extends State<CapturePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.border,
+      backgroundColor: AppColor.white,
       appBar: const AppAppBarWidget(
         title: 'Capture Page',
         elevation: 0,

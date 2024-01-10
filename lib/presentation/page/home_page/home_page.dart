@@ -181,6 +181,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 12.h),
           SizedBox(
             child: ListView.separated(
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: 12,
