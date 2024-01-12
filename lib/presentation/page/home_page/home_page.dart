@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_office_monitoring_app/presentation/page/detail_location_page/detail_location_page.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final PageController pageController;
+  final Function(int indexClicked)? callbackController;
+
+  const HomePage({
+    super.key,
+    required this.pageController,
+    this.callbackController,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,9 +27,15 @@ class _HomePageState extends State<HomePage> {
           SizedBox(height: 12.h),
           topSection(),
           headerSection(),
-          SizedBox(height: 12.h),
+          Container(
+            height: 12.h,
+            color: AppColor.border,
+          ),
           bodySection(),
-          SizedBox(height: 12.h),
+          Container(
+            height: 12.h,
+            color: AppColor.border,
+          ),
           bottomSection(),
         ],
       ),
@@ -111,11 +125,30 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Monitoring History",
-            style: GoogleFonts.inter(
-              fontSize: 18.sp,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Monitoring History",
+                style: GoogleFonts.inter(
+                  fontSize: 18.sp,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  widget.pageController.jumpToPage(1);
+                  // widget.callbackController?.call(1);
+                },
+                child: Text(
+                  "See All",
+                  style: GoogleFonts.inter(
+                    fontSize: 14.sp,
+                    color: AppColor.blue,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 12.h),
           SizedBox(
@@ -125,31 +158,43 @@ class _HomePageState extends State<HomePage> {
               scrollDirection: Axis.horizontal,
               itemCount: 12,
               itemBuilder: (context, index) {
-                return Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network(
-                        "https://blog.logrocket.com/wp-content/uploads/2022/02/Best-IDEs-Flutter-2022.png",
-                        fit: BoxFit.cover,
-                        height: 200.h,
-                        width: 140.w,
+                return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const DetailLocationPage();
+                        },
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "10 Jam yang lalu",
-                          style: GoogleFonts.inter(
-                            fontSize: 12.sp,
-                            color: AppColor.white,
+                    );
+                  },
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: Image.network(
+                          "https://blog.logrocket.com/wp-content/uploads/2022/02/Best-IDEs-Flutter-2022.png",
+                          fit: BoxFit.cover,
+                          height: 200.h,
+                          width: 140.w,
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "10 Jam yang lalu",
+                            style: GoogleFonts.inter(
+                              fontSize: 12.sp,
+                              color: AppColor.white,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               },
               separatorBuilder: (context, index) {

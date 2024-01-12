@@ -5,7 +5,14 @@ import 'package:project_office_monitoring_app/presentation/page/detail_location_
 import 'package:project_office_monitoring_app/support/app_color.dart';
 
 class MonitorPage extends StatefulWidget {
-  const MonitorPage({super.key});
+  final PageController pageController;
+  final Function(int indexClicked)? callbackController;
+
+  const MonitorPage({
+    super.key,
+    required this.pageController,
+    this.callbackController,
+  });
 
   @override
   State<MonitorPage> createState() => _MonitorPageState();
@@ -65,7 +72,7 @@ class _MonitorPageState extends State<MonitorPage> {
                         Text(
                           "List Location $index",
                           style: GoogleFonts.inter(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                           ),
                         ),
                         const Spacer(),
