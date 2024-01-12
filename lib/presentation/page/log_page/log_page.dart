@@ -40,22 +40,27 @@ class _LogPageState extends State<LogPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          color: AppColor.primary,
-          child: _tabBar,
+    return SafeArea(
+      child: Container(
+        color: AppColor.white,
+        child: Column(
+          children: [
+            Container(
+              color: AppColor.primary,
+              child: _tabBar,
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: tabController,
+                children: [
+                  listLogView(),
+                  statsView(),
+                ],
+              ),
+            ),
+          ],
         ),
-        Expanded(
-          child: TabBarView(
-            controller: tabController,
-            children: [
-              listLogView(),
-              statsView(),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 
@@ -64,7 +69,7 @@ class _LogPageState extends State<LogPage> with TickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 24.h),
+          SizedBox(height: 18.h),
           Text(
             "Log Page: Stats View",
             style: GoogleFonts.inter(
@@ -137,7 +142,7 @@ class _LogPageState extends State<LogPage> with TickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 24.h),
+          SizedBox(height: 18.h),
           Text(
             "Log Page: Today View",
             style: GoogleFonts.inter(
