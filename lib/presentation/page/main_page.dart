@@ -59,7 +59,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.border,
+      // backgroundColor: AppColor.border,
       // appBar: AppAppBarWidget(
       //   // title: 'Main Page',
       //   title: '',
@@ -94,10 +94,19 @@ class _MainPageState extends State<MainPage> {
           //   _selectedTab(currentPage);
           // });
         },
-        children: const [
-          HomePage(),
-          MonitorPage(),
-          LogPage(),
+        children: [
+          HomePage(
+            pageController: pageController,
+            callbackController: (index) {
+              setState(() {
+                indexClicked = index;
+              });
+            },
+          ),
+          MonitorPage(
+            pageController: pageController,
+          ),
+          const LogPage(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
