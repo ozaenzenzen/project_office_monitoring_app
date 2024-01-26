@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_location_page/detail_location_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/detail_log_page/detail_log_page.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 
 class HomePage extends StatefulWidget {
@@ -164,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return const DetailLocationPage();
+                          return const DetailLogPage();
                         },
                       ),
                     );
