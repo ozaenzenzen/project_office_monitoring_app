@@ -117,7 +117,9 @@ class _MainPageState extends State<MainPage> {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return const CapturePage();
+                return const CapturePage(
+                  capturePageActionEnum: CapturePageActionEnum.capture,
+                );
               },
             ),
           );

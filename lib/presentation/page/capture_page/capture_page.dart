@@ -6,12 +6,16 @@ import 'package:project_office_monitoring_app/presentation/widget/app_main_butto
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 
+enum CapturePageActionEnum { capture, details }
+
 class CapturePage extends StatefulWidget {
   final String? location;
+  final CapturePageActionEnum capturePageActionEnum;
 
   const CapturePage({
     super.key,
     this.location,
+    required this.capturePageActionEnum,
   });
 
   @override
@@ -25,7 +29,7 @@ class _CapturePageState extends State<CapturePage> {
   @override
   void initState() {
     super.initState();
-    if (widget.location != null) {
+    if (widget.location != null || widget.capturePageActionEnum == CapturePageActionEnum.details) {
       cekpoinController.text = widget.location!;
     }
   }
@@ -119,17 +123,19 @@ class _CapturePageState extends State<CapturePage> {
               ),
               SizedBox(height: 24.h),
               // const Spacer(),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 12.h,
-                ),
-                child: AppMainButtonWidget(
-                  onPressed: () {
-                    //
-                  },
-                  text: "Submit",
-                ),
-              ),
+              widget.capturePageActionEnum == CapturePageActionEnum.capture
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.h,
+                      ),
+                      child: AppMainButtonWidget(
+                        onPressed: () {
+                          //
+                        },
+                        text: "Submit",
+                      ),
+                    )
+                  : const SizedBox(),
               SizedBox(height: 24.h),
             ],
           ),

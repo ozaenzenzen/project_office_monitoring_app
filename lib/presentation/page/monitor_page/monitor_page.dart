@@ -53,6 +53,7 @@ class _MonitorPageState extends State<MonitorPage> {
                           // return const DetailLocationPage();
                           return CapturePage(
                             location: "List Location $index",
+                            capturePageActionEnum: CapturePageActionEnum.details,
                           );
                         },
                       ),
