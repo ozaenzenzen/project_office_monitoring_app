@@ -21,6 +21,8 @@ class _SignInPageState extends State<SignInPage> {
 
   bool keepLogin = false;
 
+  bool isHidePassword = true;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -95,7 +97,17 @@ class _SignInPageState extends State<SignInPage> {
                     textFieldTitle: "Password",
                     textFieldHintText: "*****",
                     controller: passwordTextFieldController,
-                    obscureText: true,
+                    obscureText: isHidePassword,
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        setState(() {
+                          isHidePassword = !isHidePassword;
+                        });
+                      },
+                      child: Icon(
+                        isHidePassword ? Icons.visibility_off : Icons.visibility,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 10.h),
                   Row(
