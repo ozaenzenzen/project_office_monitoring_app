@@ -110,55 +110,24 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   SizedBox(height: 10.h),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            keepLogin = !keepLogin;
-                          });
-                        },
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              height: 24.h,
-                              width: 24.h,
-                              child: Checkbox(
-                                value: keepLogin,
-                                onChanged: (onChanged) {
-                                  setState(() {
-                                    keepLogin = !keepLogin;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 10.w),
-                            Text(
-                              "Remember Me",
-                              style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
-                                fontSize: 14.sp,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Spacer(),
-                      InkWell(
-                        onTap: () {
-                          // Get.to(() => const ForgotPasswordScreen());
-                        },
-                        child: Text(
-                          "Forgot Password",
-                          style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
-                            fontSize: 14.sp,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: () {
+                  //         // Get.to(() => const ForgotPasswordScreen());
+                  //       },
+                  //       child: Text(
+                  //         "Forgot Password",
+                  //         style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
+                  //           fontSize: 14.sp,
+                  //           color: Colors.blue,
+                  //           fontWeight: FontWeight.w600,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(height: 20.h),
                   Column(
                     children: [
