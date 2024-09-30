@@ -33,15 +33,40 @@ class _LogPageState extends State<LogPage> with TickerProviderStateMixin {
 
   TabBar get _tabBar => TabBar(
         // unselectedLabelColor: AppColor.disabled,
+        indicatorColor: AppColor.white,
         controller: tabController,
-        tabs: const [
+        tabs: [
           Tab(
-            text: "Staff",
-            icon: Icon(Icons.info),
+            // text: "Staff",
+            icon: Icon(
+              Icons.info,
+              color: AppColor.white,
+              size: 24.h,
+            ),
+            child: Text(
+              "Staff",
+              style: GoogleFonts.inter(
+                fontSize: 14.sp,
+                color: AppColor.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
           Tab(
-            text: "Location",
-            icon: Icon(Icons.legend_toggle_sharp),
+            // text: "Location",
+            icon: Icon(
+              Icons.legend_toggle_sharp,
+              color: AppColor.white,
+              size: 24.h,
+            ),
+            child: Text(
+              "Location",
+              style: GoogleFonts.inter(
+                fontSize: 14.sp,
+                color: AppColor.white,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
         ],
       );
