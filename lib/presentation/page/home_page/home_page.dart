@@ -62,14 +62,6 @@ class _HomePageState extends State<HomePage> {
               fontWeight: FontWeight.w700,
             ),
           ),
-          SizedBox(height: 8.h),
-          Text(
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
-            style: GoogleFonts.inter(
-              fontSize: 14.sp,
-              // fontWeight: FontWeight.w600,
-            ),
-          ),
           SizedBox(height: 12.h),
         ],
       ),
