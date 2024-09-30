@@ -74,12 +74,13 @@ class _DetailLocationPageState extends State<DetailLocationPage> {
               itemBuilder: (context, index) {
                 return LocationItemWidget(
                   index: index,
+                  title: "Staff",
                 );
               },
               separatorBuilder: (context, index) {
                 return Container(
-                  height: 1.h,
-                  color: AppColor.disabled,
+                  height: 0.1,
+                  color: AppColor.border,
                 );
               },
             ),

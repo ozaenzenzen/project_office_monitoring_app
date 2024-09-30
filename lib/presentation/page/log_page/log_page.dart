@@ -136,6 +136,7 @@ class _LogPageState extends State<LogPage> with TickerProviderStateMixin {
             itemBuilder: (context, index) {
               return LocationItemWidget(
                 index: index,
+                title: "Staff",
               );
             },
             separatorBuilder: (context, index) {
@@ -213,6 +214,7 @@ class _LogPageState extends State<LogPage> with TickerProviderStateMixin {
             itemBuilder: (context, index) {
               return LocationItemWidget(
                 index: index,
+                title: "Staff",
               );
             },
             separatorBuilder: (context, index) {

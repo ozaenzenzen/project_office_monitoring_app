@@ -6,16 +6,22 @@ import 'package:project_office_monitoring_app/support/app_color.dart';
 
 class LocationItemWidget extends StatelessWidget {
   final int index;
+  final Function()? onTap;
+  final String title;
+  final dynamic data;
 
   const LocationItemWidget({
     super.key,
     required this.index,
+    required this.title,
+    this.onTap,
+    this.data,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: onTap ?? () {
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -72,7 +78,7 @@ class LocationItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "List Log $index",
+                      "$title $index",
                       style: GoogleFonts.inter(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
