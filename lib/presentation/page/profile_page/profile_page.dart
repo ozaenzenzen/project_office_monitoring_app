@@ -108,30 +108,30 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       child: Column(
         children: [
-          InkWell(
-            onTap: () {
-              //
-            },
-            child: SizedBox(
-              height: 40.h,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.lock,
-                    size: 24.h,
-                  ),
-                  SizedBox(width: 8.w),
-                  Text(
-                    "Ubah Kata Sandi / Password",
-                    style: GoogleFonts.inter(
-                      fontSize: 12.sp,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 12.h),
+          // InkWell(
+          //   onTap: () {
+          //     //
+          //   },
+          //   child: SizedBox(
+          //     height: 40.h,
+          //     child: Row(
+          //       children: [
+          //         Icon(
+          //           Icons.lock,
+          //           size: 24.h,
+          //         ),
+          //         SizedBox(width: 8.w),
+          //         Text(
+          //           "Ubah Kata Sandi / Password",
+          //           style: GoogleFonts.inter(
+          //             fontSize: 12.sp,
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(height: 12.h),
           InkWell(
             onTap: () {
               Navigator.of(context).pushAndRemoveUntil(
