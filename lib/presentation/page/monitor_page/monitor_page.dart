@@ -50,11 +50,11 @@ class _MonitorPageState extends State<MonitorPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          // return const DetailLocationPage();
-                          return CapturePage(
-                            location: "List Location $index",
-                            capturePageActionEnum: CapturePageActionEnum.details,
-                          );
+                          return const DetailLocationPage();
+                          // return CapturePage(
+                          //   location: "List Location $index",
+                          //   capturePageActionEnum: CapturePageActionEnum.details,
+                          // );
                         },
                       ),
                     );
