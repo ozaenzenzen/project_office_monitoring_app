@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_appbar_widget.dart';
+import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 
 class DetailLocationPage extends StatefulWidget {
@@ -10,13 +14,154 @@ class DetailLocationPage extends StatefulWidget {
 }
 
 class _DetailLocationPageState extends State<DetailLocationPage> {
+  final formatter = DateFormat('dd MMMM yyyy');
+  TextEditingController checkpointDateTodayController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.border,
+      backgroundColor: AppColor.white,
       appBar: const AppAppBarWidget(
         title: 'Detail Location Page',
         elevation: 0,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.h,
+              vertical: 12.h,
+            ),
+            child: AppTextFieldWidget(
+              textFieldTitle: "Checkpoint Date",
+              // textFieldHintText: "12-2-2023",
+              textFieldHintText: formatter.format(DateTime.now()),
+              controller: checkpointDateTodayController,
+              readOnly: true,
+              suffixIcon: const Icon(Icons.date_range_sharp),
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                  lastDate: DateTime.now(),
+                );
+
+                if (pickedDate != null) {
+                  debugPrint(pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
+                  // String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                  String formattedDate = formatter.format(pickedDate);
+                  debugPrint(formattedDate); //formatted date output using intl package =>  2021-03-16
+                  //you can implement different kind of Date Format here according to your requirement
+
+                  setState(() {
+                    checkpointDateTodayController.text = formattedDate; //set output date to TextField value.
+                  });
+                } else {
+                  debugPrint("Date is not selected");
+                }
+              },
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+              // physics: const NeverScrollableScrollPhysics(),
+              physics: const ScrollPhysics(),
+              itemCount: 10,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) {
+                    //       return const DetailLogPage();
+                    //     },
+                    //   ),
+                    // );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 16.h,
+                      horizontal: 12.h,
+                    ),
+                    // decoration: BoxDecoration(
+                    //   border: Border(
+                    //     bottom: BorderSide(
+                    //       width: 1.h,
+                    //       color: AppColor.disabled,
+                    //     ),
+                    //   ),
+                    // ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.security,
+                              size: 16.h,
+                            ),
+                            SizedBox(width: 10.h),
+                            Text(
+                              "Date $index",
+                              style: GoogleFonts.inter(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10.h),
+                        Row(
+                          children: [
+                            Image.network(
+                              "https://cdn.mos.cms.futurecdn.net/SXtKY6DhYhKeSXL9BhX9s9.jpg",
+                              height: 60.h,
+                            ),
+                            SizedBox(width: 10.h),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "List Log $index",
+                                  style: GoogleFonts.inter(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                SizedBox(height: 5.h),
+                                Text(
+                                  "$index Jam yang lalu",
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12.sp,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 20.h,
+                            ),
+                            SizedBox(width: 10.h),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Container(
+                  height: 1.h,
+                  color: AppColor.disabled,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
