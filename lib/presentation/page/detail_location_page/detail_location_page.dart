@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_appbar_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
@@ -72,14 +73,18 @@ class _DetailLocationPageState extends State<DetailLocationPage> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) {
-                    //       return const DetailLogPage();
-                    //     },
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          // return const DetailLogPage();
+                          return CapturePage(
+                            location: "Location $index",
+                            capturePageActionEnum: CapturePageActionEnum.details,
+                          );
+                        },
+                      ),
+                    );
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -105,7 +110,7 @@ class _DetailLocationPageState extends State<DetailLocationPage> {
                             ),
                             SizedBox(width: 10.h),
                             Text(
-                              "Date $index",
+                              "Staff $index",
                               style: GoogleFonts.inter(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,
