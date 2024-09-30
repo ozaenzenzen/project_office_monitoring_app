@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
+import 'package:project_office_monitoring_app/presentation/specific_widget/location_item_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_appbar_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
@@ -71,91 +72,8 @@ class _DetailLocationPageState extends State<DetailLocationPage> {
               itemCount: 10,
               shrinkWrap: true,
               itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          // return const DetailLogPage();
-                          return CapturePage(
-                            location: "Location $index",
-                            capturePageActionEnum: CapturePageActionEnum.details,
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 16.h,
-                      horizontal: 12.h,
-                    ),
-                    // decoration: BoxDecoration(
-                    //   border: Border(
-                    //     bottom: BorderSide(
-                    //       width: 1.h,
-                    //       color: AppColor.disabled,
-                    //     ),
-                    //   ),
-                    // ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.security,
-                              size: 16.h,
-                            ),
-                            SizedBox(width: 10.h),
-                            Text(
-                              "Staff $index",
-                              style: GoogleFonts.inter(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 10.h),
-                        Row(
-                          children: [
-                            Image.network(
-                              "https://cdn.mos.cms.futurecdn.net/SXtKY6DhYhKeSXL9BhX9s9.jpg",
-                              height: 60.h,
-                            ),
-                            SizedBox(width: 10.h),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "List Log $index",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(height: 5.h),
-                                Text(
-                                  "$index Jam yang lalu",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 20.h,
-                            ),
-                            SizedBox(width: 10.h),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                return LocationItemWidget(
+                  index: index,
                 );
               },
               separatorBuilder: (context, index) {
