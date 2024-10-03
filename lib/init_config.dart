@@ -1,11 +1,15 @@
 import 'package:project_office_monitoring_app/env.dart';
 import 'package:project_office_monitoring_app/support/app_connectivity_service.dart';
 import 'package:project_office_monitoring_app/support/app_info.dart';
+import 'package:project_office_monitoring_app/support/local_service_hive.dart';
 
 class AppInitConfig {
+  static LocalServiceHive localStorage = LocalServiceHive();
+  
   static Future<void> init() async {
     // AppTheme.appThemeInit();
     // await GetStorage.init();
+    await localStorage.init();
     AppInfo.appInfoInit();
     AppConnectivityService.init();
     // AppLocalStorage.init();

@@ -32,6 +32,11 @@ dependencies:
   connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.2
   dio: ^5.4.0
+  # hive:
+  hive_flutter: 1.1.0
+  hex:
+  pointycastle:
+  encrypt:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
