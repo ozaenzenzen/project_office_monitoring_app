@@ -14,7 +14,7 @@ class AppAccountRepository {
       final response = await AppApiService(
         EnvironmentConfig.baseUrl(),
       ).call(
-        AppApiPath.signin,
+        AppApiPath.signIn,
         request: data.toJson(),
         header: {
           "platformkey" : platformKey,
