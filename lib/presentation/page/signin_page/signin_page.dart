@@ -25,6 +25,9 @@ class _SignInPageState extends State<SignInPage> {
   TextEditingController emailTextFieldController = TextEditingController(text: "");
   TextEditingController passwordTextFieldController = TextEditingController(text: "");
 
+  TextEditingController platformNameTextFieldController = TextEditingController(text: "");
+  TextEditingController platformSecretTextFieldController = TextEditingController(text: "");
+
   bool keepLogin = false;
 
   bool isHidePassword = true;
@@ -174,7 +177,8 @@ class _SignInPageState extends State<SignInPage> {
                                           email: emailTextFieldController.text,
                                           password: passwordTextFieldController.text,
                                         ),
-                                        platformkey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA1MzE4NTUsInBsYXRmb3JtX25hbWUiOiJzbjBaNVRuMmNxc0NCWnVpbDlkWWZBQ1YiLCJ1c2VyX3N0YW1wIjoiUFQgQ29tcGFueSAxMjM1ZTBhYzNhYi0yMGFlLTRkZTgtOWJmNy0yZTRkODA0Y2MzNDMifQ.0pacSPG_Oll_vVOFxN3n65ogW8VyxwfXLJdD9viYQ48",
+                                        platformkey:
+                                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA1MzE4NTUsInBsYXRmb3JtX25hbWUiOiJzbjBaNVRuMmNxc0NCWnVpbDlkWWZBQ1YiLCJ1c2VyX3N0YW1wIjoiUFQgQ29tcGFueSAxMjM1ZTBhYzNhYi0yMGFlLTRkZTgtOWJmNy0yZTRkODA0Y2MzNDMifQ.0pacSPG_Oll_vVOFxN3n65ogW8VyxwfXLJdD9viYQ48",
                                         // appVehicleReposistory: AppVehicleReposistory(),
                                         // vehicleLocalRepository: VehicleLocalRepository(),
                                       ),
@@ -348,77 +352,47 @@ class _SignInPageState extends State<SignInPage> {
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (BuildContext context, Function setState) {
-            return CustomDialogV2(
-              title: 'Syarat Ketentuan Pengiriman Barang',
-              content: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 20.h,
-                    width: 20.h,
-                    child: Checkbox(
-                      checkColor: const Color(0xff42526D),
-                      activeColor: const Color(0xffFFFF00),
-                      value: true,
-                      onChanged: (bool? value) {
-                        // if (syaratKetentuanCheckBox == false) {
-                        //   setState(() {
-                        //     syaratKetentuanCheckBox = true;
-                        //   });
-                        // } else {
-                        //   setState(() {
-                        //     syaratKetentuanCheckBox = false;
-                        //   });
-                        // }
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 12.w),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Jika berat atau dimensi berbeda dengan yang diinput maka akan ada penambahan biaya, dan jika tidak disetujui makan akan dikenakan biaya pemotongan antar jemput barang.',
-                          style: GoogleFonts.mukta(
-                            color: const Color(0xff121419),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                        SizedBox(height: 4.h),
-                        InkWell(
-                          onTap: () async {
-                            // 
-                          },
-                          child: Text(
-                            'Baca Ketentuan Pengiriman',
-                            style: GoogleFonts.mukta(
-                              color: const Color(0xff1EA9F8),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r),
               ),
-              primaryButtonText: 'Tidak Setuju',
-              onTapPrimary: () {
-                // Get.back();
-                Navigator.pop(context);
-              },
-              secondaryTextColor: const Color(0xff42526D),
-              secondaryButtonText: 'Lanjut',
-              onTapSecondary: (true)
-                  ? () async {
-                      // 
-                    }
-                  : null,
-              buttonDirection: ButtonDirectionV2.HORIZONTAL,
+              elevation: 0,
+              backgroundColor: Colors.white,
+              child: Container(
+                padding: EdgeInsets.all(12.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Input Code Activation",
+                      style: GoogleFonts.inter(
+                        fontSize: 26.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 18.h),
+                    AppTextFieldWidget(
+                      textFieldTitle: "Platform Name",
+                      textFieldHintText: "Input Platform Name here",
+                      controller: platformNameTextFieldController,
+                    ),
+                    SizedBox(height: 8.h),
+                    AppTextFieldWidget(
+                      textFieldTitle: "Platform Secret",
+                      textFieldHintText: "Input Platform Secret here",
+                      controller: platformSecretTextFieldController,
+                    ),
+                    SizedBox(height: 14.h),
+                    AppMainButtonWidget(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      text: "Input",
+                    ),
+                  ],
+                ),
+              ),
             );
           },
         );
