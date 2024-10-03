@@ -9,6 +9,7 @@ import 'package:project_office_monitoring_app/presentation/page/signup_page/sign
 import 'package:project_office_monitoring_app/presentation/widget/app_loading_indicator.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
+import 'package:project_office_monitoring_app/presentation/widget/custom_dialog.dart';
 import 'package:project_office_monitoring_app/support/app_dialog_action.dart';
 import 'package:project_office_monitoring_app/support/app_info.dart';
 import 'package:project_office_monitoring_app/support/app_theme.dart';
@@ -115,24 +116,25 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   SizedBox(height: 10.h),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.end,
-                  //   children: [
-                  //     InkWell(
-                  //       onTap: () {
-                  //         // Get.to(() => const ForgotPasswordScreen());
-                  //       },
-                  //       child: Text(
-                  //         "Forgot Password",
-                  //         style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
-                  //           fontSize: 14.sp,
-                  //           color: Colors.blue,
-                  //           fontWeight: FontWeight.w600,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          // Get.to(() => const ForgotPasswordScreen());
+                          dialogActivation();
+                        },
+                        child: Text(
+                          "Input Code Activation",
+                          style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
+                            fontSize: 14.sp,
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 20.h),
                   BlocConsumer<SignInBloc, SignInState>(
                     listener: (context, state) {
@@ -337,6 +339,90 @@ class _SignInPageState extends State<SignInPage> {
           ),
         ),
       ),
+    );
+  }
+
+  void dialogActivation() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, Function setState) {
+            return CustomDialogV2(
+              title: 'Syarat Ketentuan Pengiriman Barang',
+              content: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 20.h,
+                    width: 20.h,
+                    child: Checkbox(
+                      checkColor: const Color(0xff42526D),
+                      activeColor: const Color(0xffFFFF00),
+                      value: true,
+                      onChanged: (bool? value) {
+                        // if (syaratKetentuanCheckBox == false) {
+                        //   setState(() {
+                        //     syaratKetentuanCheckBox = true;
+                        //   });
+                        // } else {
+                        //   setState(() {
+                        //     syaratKetentuanCheckBox = false;
+                        //   });
+                        // }
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Jika berat atau dimensi berbeda dengan yang diinput maka akan ada penambahan biaya, dan jika tidak disetujui makan akan dikenakan biaya pemotongan antar jemput barang.',
+                          style: GoogleFonts.mukta(
+                            color: const Color(0xff121419),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.sp,
+                          ),
+                        ),
+                        SizedBox(height: 4.h),
+                        InkWell(
+                          onTap: () async {
+                            // 
+                          },
+                          child: Text(
+                            'Baca Ketentuan Pengiriman',
+                            style: GoogleFonts.mukta(
+                              color: const Color(0xff1EA9F8),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              primaryButtonText: 'Tidak Setuju',
+              onTapPrimary: () {
+                // Get.back();
+                Navigator.pop(context);
+              },
+              secondaryTextColor: const Color(0xff42526D),
+              secondaryButtonText: 'Lanjut',
+              onTapSecondary: (true)
+                  ? () async {
+                      // 
+                    }
+                  : null,
+              buttonDirection: ButtonDirectionV2.HORIZONTAL,
+            );
+          },
+        );
+      },
     );
   }
 }
