@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_office_monitoring_app/data/model/remote/account/signin_request_model.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/signin_page/bloc/sign_in_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/signup_page/signup_page.dart';
+import 'package:project_office_monitoring_app/presentation/widget/app_loading_indicator.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
+import 'package:project_office_monitoring_app/support/app_dialog_action.dart';
 import 'package:project_office_monitoring_app/support/app_info.dart';
 import 'package:project_office_monitoring_app/support/app_theme.dart';
 
@@ -129,60 +134,141 @@ class _SignInPageState extends State<SignInPage> {
                   //   ],
                   // ),
                   SizedBox(height: 20.h),
-                  Column(
-                    children: [
-                      AppMainButtonWidget(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const MainPage();
+                  BlocConsumer<SignInBloc, SignInState>(
+                    listener: (context, state) {
+                      if (state is SignInFailed) {
+                        AppDialogAction.showFailedPopup(
+                          title: 'Terjadi kesalahan',
+                          description: state.errorMessage,
+                          buttonTitle: 'Kembali',
+                          context: context,
+                        );
+                      } else if (state is SignInSuccess) {
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        // Get.offAll(
+                        //   () => const MainPage(),
+                        // );
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const MainPage();
+                            },
+                          ),
+                        );
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is SignInLoading) {
+                        return const AppLoadingIndicator();
+                      } else {
+                        return Column(
+                          children: [
+                            AppMainButtonWidget(
+                              onPressed: () {
+                                context.read<SignInBloc>().add(
+                                      SignInAction(
+                                        signInRequestModel: SignInRequestModel(
+                                          email: emailTextFieldController.text,
+                                          password: passwordTextFieldController.text,
+                                        ),
+                                        platformkey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA1MzE4NTUsInBsYXRmb3JtX25hbWUiOiJzbjBaNVRuMmNxc0NCWnVpbDlkWWZBQ1YiLCJ1c2VyX3N0YW1wIjoiUFQgQ29tcGFueSAxMjM1ZTBhYzNhYi0yMGFlLTRkZTgtOWJmNy0yZTRkODA0Y2MzNDMifQ.0pacSPG_Oll_vVOFxN3n65ogW8VyxwfXLJdD9viYQ48",
+                                        // appVehicleReposistory: AppVehicleReposistory(),
+                                        // vehicleLocalRepository: VehicleLocalRepository(),
+                                      ),
+                                    );
+                                // Get.offAll(
+                                //   () => const MainPage(),
+                                // );
                               },
+                              text: "Masuk",
                             ),
-                          );
-                          // context.read<SigninBloc>().add(
-                          //       SigninAction(
-                          //         signInRequestModel: SignInRequestModel(
-                          //           email: emailTextFieldController.text,
-                          //           password: passwordTextFieldController.text,
-                          //         ),
-                          //         appVehicleReposistory: AppVehicleReposistory(),
-                          //         vehicleLocalRepository: VehicleLocalRepository(),
-                          //       ),
-                          //     );
-                        },
-                        text: "Masuk",
-                      ),
-                      SizedBox(height: 20.h),
-                      Text(
-                        "Belum Ada Akun?",
-                        style: GoogleFonts.inter(
-                          color: Colors.black,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      AppMainButtonWidget(
-                        onPressed: () {
-                          // Get.to(
-                          //   () => const SignUpPage(),
-                          // );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const SignUpPage();
+                            SizedBox(height: 20.h),
+                            Text(
+                              "Belum Ada Akun?",
+                              style: GoogleFonts.inter(
+                                color: Colors.black,
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(height: 20.h),
+                            AppMainButtonWidget(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return const SignUpPage();
+                                    },
+                                  ),
+                                );
+                                // Get.to(
+                                //   () => const SignUpPage(),
+                                // );
                               },
+                              text: "Daftar",
                             ),
-                          );
-                        },
-                        text: "Daftar",
-                      ),
-                      SizedBox(height: 20.h),
-                    ],
+                            SizedBox(height: 20.h),
+                          ],
+                        );
+                      }
+                    },
                   ),
+                  // Column(
+                  //   children: [
+                  //     AppMainButtonWidget(
+                  //       onPressed: () {
+                  //         Navigator.pushReplacement(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //             builder: (context) {
+                  //               return const MainPage();
+                  //             },
+                  //           ),
+                  //         );
+                  //         // context.read<SigninBloc>().add(
+                  //         //       SigninAction(
+                  //         //         signInRequestModel: SignInRequestModel(
+                  //         //           email: emailTextFieldController.text,
+                  //         //           password: passwordTextFieldController.text,
+                  //         //         ),
+                  //         //         appVehicleReposistory: AppVehicleReposistory(),
+                  //         //         vehicleLocalRepository: VehicleLocalRepository(),
+                  //         //       ),
+                  //         //     );
+                  //       },
+                  //       text: "Masuk",
+                  //     ),
+                  //     SizedBox(height: 20.h),
+                  //     Text(
+                  //       "Belum Ada Akun?",
+                  //       style: GoogleFonts.inter(
+                  //         color: Colors.black,
+                  //         fontSize: 14.sp,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //     SizedBox(height: 20.h),
+                  //     AppMainButtonWidget(
+                  //       onPressed: () {
+                  //         // Get.to(
+                  //         //   () => const SignUpPage(),
+                  //         // );
+                  //         Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //             builder: (context) {
+                  //               return const SignUpPage();
+                  //             },
+                  //           ),
+                  //         );
+                  //       },
+                  //       text: "Daftar",
+                  //     ),
+                  //     SizedBox(height: 20.h),
+                  //   ],
+                  // ),
                   // BlocConsumer<SigninBloc, SigninState>(
                   //   listener: (context, state) {
                   //     if (state is SigninFailed) {

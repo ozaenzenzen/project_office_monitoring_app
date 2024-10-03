@@ -100,9 +100,9 @@ class AppApiService {
     } on DioException catch (e) {
       // debugPrint('Error $selectedMethod $url: $e\nData: ${(e.response?.data ?? "empty")}');
       if (e.response?.data is Map) {
-        (e.response?.data as Map).addAll(<String, dynamic>{
-          "status": "error",
-        });
+        // (e.response?.data as Map).addAll(<String, dynamic>{
+        //   "status": "error",
+        // });
         return e.response!;
       } else {
         Response response = Response(
