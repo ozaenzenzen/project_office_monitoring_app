@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/account_repository.dart';
+import 'package:project_office_monitoring_app/data/repository/remote/platform_repository.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/signin_page/bloc/sign_in_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/signin_page/platform_bloc/platform_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/signin_page/signin_page.dart';
 import 'package:project_office_monitoring_app/support/app_theme.dart';
 
@@ -23,6 +25,7 @@ class _MyAppState extends State<MyApp> {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => SignInBloc(AppAccountRepository())),
+        BlocProvider(create: (context) => PlatformBloc(PlatformRepository())),
       ],
       child: ScreenUtilInit(
         // designSize: const Size(360, 690),
