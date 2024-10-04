@@ -1,3 +1,7 @@
+import 'package:project_office_monitoring_app/domain/entities/company_data_entity.dart';
+import 'package:project_office_monitoring_app/domain/entities/user_company_data_entity.dart';
+import 'package:project_office_monitoring_app/domain/entities/user_data_entity.dart';
+
 class SignInResponseModel {
   int? status;
   String? message;
@@ -8,6 +12,27 @@ class SignInResponseModel {
     this.message,
     this.data,
   });
+
+  UserCompanyDataEntity? toUserCompanyDataEntity() {
+    if (data == null) {
+      return null;
+    } else {
+      return UserCompanyDataEntity.fromJson(
+        data!.toJson(),
+      );
+    }
+  }
+
+  UserDataEntity toUserDataEntity() => UserDataEntity(
+        userStamp: data?.userStamp,
+        name: data?.name,
+        email: data?.email,
+        noreg: data?.noreg,
+        jabatan: data?.jabatan,
+        phone: data?.phone,
+        typeuser: data?.typeuser,
+        profilePicture: data?.profilePicture,
+      );
 
   factory SignInResponseModel.fromJson(Map<String, dynamic> json) => SignInResponseModel(
         status: json["status"],
@@ -44,6 +69,19 @@ class SignInResponseData {
     this.profilePicture,
     this.companyData,
   });
+
+  CompanyDataEntity toCompanyDataEntity() => CompanyDataEntity.toLocal(
+        companyStamp: companyData?.companyStamp,
+        companyName: companyData?.companyName,
+        companyEmail: companyData?.companyEmail,
+        companyPhone: companyData?.companyPhone,
+        picture: companyData?.picture,
+        city: companyData?.city,
+        state: companyData?.state,
+        zip: companyData?.zip,
+        address: companyData?.address,
+        information: companyData?.information,
+      );
 
   factory SignInResponseData.fromJson(Map<String, dynamic> json) => SignInResponseData(
         userStamp: json["user_stamp"],
