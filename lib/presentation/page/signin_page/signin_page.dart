@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/data/model/remote/account/signin_request_model.dart';
+import 'package:project_office_monitoring_app/data/model/remote/platform/initialize_platform_request_model.dart';
+import 'package:project_office_monitoring_app/init_config.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/signin_page/bloc/sign_in_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/signin_page/platform_activation_bloc/platform_activation_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/signin_page/platform_bloc/platform_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/signup_page/signup_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_loading_indicator.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
@@ -119,24 +123,51 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   SizedBox(height: 10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // Get.to(() => const ForgotPasswordScreen());
-                          dialogActivation();
-                        },
-                        child: Text(
-                          "Input Code Activation",
-                          style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
-                            fontSize: 14.sp,
-                            color: Colors.blue,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: () {
+                  //         // Get.to(() => const ForgotPasswordScreen());
+                  //         dialogActivation();
+                  //       },
+                  //       child: Text(
+                  //         "Input Code Activation",
+                  //         style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
+                  //           fontSize: 14.sp,
+                  //           color: Colors.blue,
+                  //           fontWeight: FontWeight.w600,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  BlocBuilder<PlatformActivationBloc, PlatformActivationState>(
+                    builder: (context, state) {
+                      if (state is PlatformActivationHide) {
+                        return const SizedBox();
+                      } else {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                // Get.to(() => const ForgotPasswordScreen());
+                                dialogActivation();
+                              },
+                              child: Text(
+                                "Input Code Activation",
+                                style: AppTheme.theme.textTheme.headlineMedium?.copyWith(
+                                  fontSize: 14.sp,
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                    },
                   ),
                   SizedBox(height: 20.h),
                   BlocConsumer<SignInBloc, SignInState>(
@@ -177,8 +208,7 @@ class _SignInPageState extends State<SignInPage> {
                                           email: emailTextFieldController.text,
                                           password: passwordTextFieldController.text,
                                         ),
-                                        platformkey:
-                                            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA1MzE4NTUsInBsYXRmb3JtX25hbWUiOiJzbjBaNVRuMmNxc0NCWnVpbDlkWWZBQ1YiLCJ1c2VyX3N0YW1wIjoiUFQgQ29tcGFueSAxMjM1ZTBhYzNhYi0yMGFlLTRkZTgtOWJmNy0yZTRkODA0Y2MzNDMifQ.0pacSPG_Oll_vVOFxN3n65ogW8VyxwfXLJdD9viYQ48",
+                                        // platformkey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzA1MzE4NTUsInBsYXRmb3JtX25hbWUiOiJzbjBaNVRuMmNxc0NCWnVpbDlkWWZBQ1YiLCJ1c2VyX3N0YW1wIjoiUFQgQ29tcGFueSAxMjM1ZTBhYzNhYi0yMGFlLTRkZTgtOWJmNy0yZTRkODA0Y2MzNDMifQ.0pacSPG_Oll_vVOFxN3n65ogW8VyxwfXLJdD9viYQ48",
                                         // appVehicleReposistory: AppVehicleReposistory(),
                                         // vehicleLocalRepository: VehicleLocalRepository(),
                                       ),
@@ -201,6 +231,7 @@ class _SignInPageState extends State<SignInPage> {
                             SizedBox(height: 20.h),
                             AppMainButtonWidget(
                               onPressed: () {
+                                // AppInitConfig.logout();
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -382,13 +413,67 @@ class _SignInPageState extends State<SignInPage> {
                       textFieldTitle: "Platform Secret",
                       textFieldHintText: "Input Platform Secret here",
                       controller: platformSecretTextFieldController,
+                      maxLines: 6,
                     ),
                     SizedBox(height: 14.h),
-                    AppMainButtonWidget(
-                      onPressed: () {
-                        Navigator.pop(context);
+                    BlocConsumer<PlatformBloc, PlatformState>(
+                      listener: (context, state) {
+                        if (state is PlatformFailed) {
+                          AppDialogAction.showFailedPopup(
+                            title: 'Terjadi kesalahan',
+                            description: state.errorMessage,
+                            buttonTitle: 'Kembali',
+                            context: context,
+                          );
+                        } else if (state is PlatformSuccess) {
+                          platformNameTextFieldController.clear();
+                          platformSecretTextFieldController.clear();
+                          AppDialogAction.showSuccessPopup(
+                            title: 'Berhasil',
+                            description: "Kode aktivasi sudah berhasil",
+                            buttonTitle: 'Kembali',
+                            mainButtonAction: () {
+                              Navigator.pop(context);
+                              Navigator.pop(context);
+                              context.read<PlatformActivationBloc>().add(CheckIsActivationCodeActiveAction());
+                            },
+                            context: context,
+                          );
+                          // Navigator.pop(context);
+                          // context.read<PlatformActivationBloc>().add(CheckIsActivationCodeActiveAction());
+                        }
                       },
-                      text: "Input",
+                      builder: (context, state) {
+                        if (state is PlatformLoading) {
+                          return const Center(
+                            child: AppLoadingIndicator(),
+                          );
+                        } else {
+                          return AppMainButtonWidget(
+                            onPressed: () {
+                              // if (platformNameTextFieldController.text.isEmpty || platformSecretTextFieldController.text.isEmpty) {
+                              //   AppDialogAction.showFailedPopup(
+                              //     title: 'Terjadi kesalahan',
+                              //     description: "Terdapat field kosong",
+                              //     buttonTitle: 'Kembali',
+                              //     context: context,
+                              //   );
+                              // } else {
+                              context.read<PlatformBloc>().add(
+                                    InitializePlatformAction(
+                                      initializePlatformRequestModel: InitializePlatformRequestModel(
+                                        platformName: platformNameTextFieldController.text,
+                                        platformSecret: platformSecretTextFieldController.text,
+                                      ),
+                                    ),
+                                  );
+                              // }
+                              // Navigator.pop(context);
+                            },
+                            text: "Input",
+                          );
+                        }
+                      },
                     ),
                   ],
                 ),

@@ -4,22 +4,35 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:project_office_monitoring_app/data/model/remote/platform/initialize_platform_request_model.dart';
 import 'package:project_office_monitoring_app/data/model/remote/platform/initialize_platform_response_model.dart';
+import 'package:project_office_monitoring_app/data/repository/local/account_local_repository.dart';
+import 'package:project_office_monitoring_app/data/repository/local/platform_local_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/platform_repository.dart';
 
 part 'platform_event.dart';
 part 'platform_state.dart';
 
 class PlatformBloc extends Bloc<PlatformEvent, PlatformState> {
-  PlatformBloc(PlatformRepository platformRepository) : super(PlatformInitial()) {
+  PlatformBloc(
+    PlatformRepository platformRepository,
+    AccountLocalRepository accountLocalRepository,
+    PlatformLocalRepository platformLocalRepository,
+  ) : super(PlatformInitial()) {
     on<PlatformEvent>((event, emit) {
       if (event is InitializePlatformAction) {
-        _initializePlatformAction(platformRepository, event);
+        _initializePlatformAction(
+          platformRepository,
+          accountLocalRepository,
+          platformLocalRepository,
+          event,
+        );
       }
     });
   }
 
   Future<void> _initializePlatformAction(
     PlatformRepository platformRepository,
+    AccountLocalRepository accountLocalRepository,
+    PlatformLocalRepository platformLocalRepository,
     InitializePlatformAction event,
   ) async {
     emit(PlatformLoading());
@@ -30,10 +43,10 @@ class PlatformBloc extends Bloc<PlatformEvent, PlatformState> {
       );
       if (initializePlatformResponseModel != null) {
         if (initializePlatformResponseModel.status == 200) {
+          platformLocalRepository.setActivationCode(initializePlatformResponseModel.toCompanyDataEntity());
+          accountLocalRepository.setIsActivationCodeActive(true);
           emit(
-            PlatformSuccess(
-                // userdata: signInResponseModel.userdata!,
-                ),
+            PlatformSuccess(),
           );
         } else {
           emit(

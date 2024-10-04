@@ -1,3 +1,5 @@
+import 'package:project_office_monitoring_app/domain/entities/initialize_platform_data_entity.dart';
+
 class InitializePlatformResponseModel {
   int? status;
   String? message;
@@ -8,6 +10,12 @@ class InitializePlatformResponseModel {
     this.message,
     this.data,
   });
+
+  InitializePlatformDataEntity toCompanyDataEntity() => InitializePlatformDataEntity.toLocal(
+        platformName: data?.platformName,
+        platformSecret: data?.platformSecret,
+        platformKey: data?.platformKey,
+      );
 
   factory InitializePlatformResponseModel.fromJson(Map<String, dynamic> json) => InitializePlatformResponseModel(
         status: json["status"],

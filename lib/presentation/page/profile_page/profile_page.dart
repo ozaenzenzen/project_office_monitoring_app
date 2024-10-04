@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_office_monitoring_app/init_config.dart';
 import 'package:project_office_monitoring_app/presentation/page/signin_page/signin_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_appbar_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
@@ -134,6 +135,7 @@ class _ProfilePageState extends State<ProfilePage> {
           // SizedBox(height: 12.h),
           InkWell(
             onTap: () {
+              AppInitConfig.logout();
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) {
                   return const SignInPage();

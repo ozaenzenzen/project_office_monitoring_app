@@ -22,21 +22,21 @@ class AccountLocalRepository {
     }
   }
 
-  Future<void> getIsLogin(bool value) async {
+  Future<bool> getIsLogin() async {
     try {
-      AppInitConfig.localStorage.user.putSecure(
+      bool result = await AppInitConfig.localStorage.user.getSecure(
         key: isLogin,
-        data: value,
       );
+      return result;
     } on Exception catch (e) {
       AppLogger.debugLog("[getIsLogin][error] $e");
-      rethrow;
+      return false;
     }
   }
 
   Future<void> setIsActivationCodeActive(bool data) async {
     try {
-      AppInitConfig.localStorage.user.putSecure(
+      AppInitConfig.localStorage.config.putSecure(
         key: isActivationCodeActive,
         data: data,
       );
@@ -48,11 +48,11 @@ class AccountLocalRepository {
 
   Future<bool> getIsActivationCodeActive() async {
     try {
-      bool result = await AppInitConfig.localStorage.user.getSecure(
+      bool result = await AppInitConfig.localStorage.config.getSecure(
         key: isActivationCodeActive,
       );
       return result;
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[getIsActivationCodeActive][error] $e");
       return false;
     }
