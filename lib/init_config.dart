@@ -15,9 +15,9 @@ class AppInitConfig {
     // AppLocalStorage.init();
     // EnvironmentConfig.customBaseUrl = "https://4be5-112-215-170-211.ngrok.io"; // for ngrok
     // EnvironmentConfig.customBaseUrl = "http://10.0.2.2:8080"; // for emulator android
-    EnvironmentConfig.customBaseUrl = "https://7c30-114-10-42-165.ngrok-free.app"; // for emulator android
+    // EnvironmentConfig.customBaseUrl = "https://7c30-114-10-42-165.ngrok-free.app"; // for emulator android
     // EnvironmentConfig.customBaseUrl = "https://6feb-114-10-42-165.ngrok-free.app"; // for emulator android
-    // EnvironmentConfig.customBaseUrl = "https://93f6-2400-9800-2f3-3dfb-89ce-c67e-e12e-f403.ngrok-free.app"; // for emulator android
+    EnvironmentConfig.customBaseUrl = "https://1f39-2400-9800-2f1-e27c-44bc-3e04-e630-99fc.ngrok-free.app"; // for emulator android
     // EnvironmentConfig.customBaseUrl = "http://localhost:8080"; // for emulator iOS
   }
 
