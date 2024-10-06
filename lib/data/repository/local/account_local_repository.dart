@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:project_office_monitoring_app/domain/entities/company_data_entity.dart';
 import 'package:project_office_monitoring_app/domain/entities/user_data_entity.dart';
 import 'package:project_office_monitoring_app/init_config.dart';
@@ -16,7 +18,7 @@ class AccountLocalRepository {
         key: isLogin,
         data: value,
       );
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[setIsLogin][error] $e");
       rethrow;
     }
@@ -28,7 +30,7 @@ class AccountLocalRepository {
         key: isLogin,
       );
       return result;
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[getIsLogin][error] $e");
       return false;
     }
@@ -40,7 +42,7 @@ class AccountLocalRepository {
         key: isActivationCodeActive,
         data: data,
       );
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[setIsActivationCodeActive][error] $e");
       rethrow;
     }
@@ -62,9 +64,9 @@ class AccountLocalRepository {
     try {
       AppInitConfig.localStorage.user.putSecure(
         key: companyData,
-        data: data,
+        data: jsonEncode(data.toJson()),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[setCompanyData][error] $e");
       rethrow;
     }
@@ -72,11 +74,12 @@ class AccountLocalRepository {
 
   Future<CompanyDataEntity?> getCompanyData() async {
     try {
-      CompanyDataEntity result = await AppInitConfig.localStorage.user.getSecure(
+      var output = await AppInitConfig.localStorage.user.getSecure(
         key: companyData,
       );
+      CompanyDataEntity result = CompanyDataEntity.fromJson(jsonDecode(output));
       return result;
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[getCompanyData][error] $e");
       return null;
     }
@@ -86,9 +89,9 @@ class AccountLocalRepository {
     try {
       AppInitConfig.localStorage.user.putSecure(
         key: userData,
-        data: data,
+        data: jsonEncode(data.toJson()),
       );
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[setUserData][error] $e");
       rethrow;
     }
@@ -96,11 +99,13 @@ class AccountLocalRepository {
 
   Future<UserDataEntity?> getUserData() async {
     try {
-      UserDataEntity result = await AppInitConfig.localStorage.user.getSecure(
+      var output = await AppInitConfig.localStorage.user.getSecure(
         key: userData,
       );
+
+      UserDataEntity result = UserDataEntity.fromJson(jsonDecode(output));
       return result;
-    } on Exception catch (e) {
+    } catch (e) {
       AppLogger.debugLog("[getUserData][error] $e");
       return null;
     }

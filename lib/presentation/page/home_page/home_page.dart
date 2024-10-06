@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_office_monitoring_app/data/repository/local/account_local_repository.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_location_page/detail_location_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_log_page/detail_log_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/widget/app_loading_indicator.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
+import 'package:skeletons/skeletons.dart';
 
 class HomePage extends StatefulWidget {
   final PageController pageController;
@@ -21,6 +26,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // context.read<HomeBloc>().add(GetHomeData());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -88,18 +99,54 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "PT Testing",
-                  style: GoogleFonts.inter(
-                    fontSize: 18.sp,
-                  ),
+                BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    if (state is HomeLoading) {
+                      return SizedBox(
+                        width: 200.w,
+                        child: const SkeletonLine(),
+                      );
+                    } else if (state is HomeSuccess) {
+                      return Text(
+                        "${state.companyData?.companyName}",
+                        style: GoogleFonts.inter(
+                          fontSize: 18.sp,
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        "",
+                        style: GoogleFonts.inter(
+                          fontSize: 18.sp,
+                        ),
+                      );
+                    }
+                  },
                 ),
                 SizedBox(height: 8.h),
-                Text(
-                  "Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678.",
-                  style: GoogleFonts.inter(
-                    fontSize: 12.sp,
-                  ),
+                BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    if (state is HomeLoading) {
+                      return SizedBox(
+                        width: 200.w,
+                        child: const SkeletonLine(),
+                      );
+                    } else if (state is HomeSuccess) {
+                      return Text(
+                        "${state.companyData?.address}",
+                        style: GoogleFonts.inter(
+                          fontSize: 12.sp,
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        "",
+                        style: GoogleFonts.inter(
+                          fontSize: 12.sp,
+                        ),
+                      );
+                    }
+                  },
                 ),
               ],
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/home_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/log_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/monitor_page.dart';
@@ -54,6 +56,12 @@ class _MainPageState extends State<MainPage> {
         }),
       );
     }
+  }
+
+  @override
+  void initState() {
+    context.read<HomeBloc>().add(GetHomeData());
+    super.initState();
   }
 
   @override
