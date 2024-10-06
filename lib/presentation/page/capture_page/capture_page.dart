@@ -85,7 +85,7 @@ class _CapturePageState extends State<CapturePage> {
                 padding: EdgeInsets.all(12.h),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.location_on,
                     ),
                     SizedBox(width: 10.w),
