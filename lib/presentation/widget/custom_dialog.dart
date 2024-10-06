@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/presentation/widget/asset_image_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/button_custom_widget.dart';
 
-enum ButtonDirectionV2 { VERTICAL, HORIZONTAL }
+enum ButtonDirectionV2 { vertical, horizontal }
 
 class CustomDialogV2 extends StatelessWidget {
   final String title;
@@ -35,7 +35,7 @@ class CustomDialogV2 extends StatelessWidget {
     this.secondaryButtonText,
     this.secondaryButtonColor,
     this.secondaryTextColor,
-    this.buttonDirection = ButtonDirectionV2.VERTICAL,
+    this.buttonDirection = ButtonDirectionV2.vertical,
   }) : super(key: key);
 
   @override
@@ -97,7 +97,7 @@ class CustomDialogV2 extends StatelessWidget {
               SizedBox(
                 height: 12.h,
               ),
-              if (buttonDirection == ButtonDirectionV2.HORIZONTAL) ...<Widget>[
+              if (buttonDirection == ButtonDirectionV2.horizontal) ...<Widget>[
                 Row(
                   children: <Widget>[
                     Visibility(

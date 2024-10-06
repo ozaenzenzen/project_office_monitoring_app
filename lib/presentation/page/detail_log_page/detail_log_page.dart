@@ -12,9 +12,9 @@ class DetailLogPage extends StatefulWidget {
 class _DetailLogPageState extends State<DetailLogPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColor.border,
-      appBar: const AppAppBarWidget(
+      appBar: AppAppBarWidget(
         title: 'Detail Log Page',
         elevation: 0,
       ),
