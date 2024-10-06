@@ -8,7 +8,6 @@ import 'package:project_office_monitoring_app/data/repository/local/account_loca
 import 'package:project_office_monitoring_app/data/repository/local/platform_local_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/account_repository.dart';
 import 'package:project_office_monitoring_app/domain/entities/initialize_platform_data_entity.dart';
-import 'package:project_office_monitoring_app/domain/entities/user_data_entity.dart';
 
 part 'sign_in_event.dart';
 part 'sign_in_state.dart';
@@ -48,6 +47,9 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         );
         if (signInResponseModel != null) {
           if (signInResponseModel.status == 200) {
+            if (signInResponseModel.userToken != null) {
+              accountLocalRepository.setUserToken(signInResponseModel.userToken ?? "");
+            }
             accountLocalRepository.setIsLogin(true);
             accountLocalRepository.setUserData(signInResponseModel.toUserDataEntity());
             if (signInResponseModel.data != null) {

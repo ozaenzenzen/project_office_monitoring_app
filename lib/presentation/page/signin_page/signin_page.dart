@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/data/model/remote/account/signin_request_model.dart';
 import 'package:project_office_monitoring_app/data/model/remote/platform/initialize_platform_request_model.dart';
-import 'package:project_office_monitoring_app/init_config.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/signin_page/bloc/sign_in_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/signin_page/platform_activation_bloc/platform_activation_bloc.dart';
@@ -13,7 +12,6 @@ import 'package:project_office_monitoring_app/presentation/page/signup_page/sign
 import 'package:project_office_monitoring_app/presentation/widget/app_loading_indicator.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
-import 'package:project_office_monitoring_app/presentation/widget/custom_dialog.dart';
 import 'package:project_office_monitoring_app/support/app_dialog_action.dart';
 import 'package:project_office_monitoring_app/support/app_info.dart';
 import 'package:project_office_monitoring_app/support/app_theme.dart';

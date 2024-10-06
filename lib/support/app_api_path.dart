@@ -1,5 +1,6 @@
 class AppApiPath {
   static const String signIn = "/account/signin";
+  static const String getUserData = "/account/getuser";
 
   static const String initializePlatform = "/platform/initialize";
 

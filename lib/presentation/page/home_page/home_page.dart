@@ -2,12 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project_office_monitoring_app/data/repository/local/account_local_repository.dart';
-import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
-import 'package:project_office_monitoring_app/presentation/page/detail_location_page/detail_location_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_log_page/detail_log_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
-import 'package:project_office_monitoring_app/presentation/widget/app_loading_indicator.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 import 'package:skeletons/skeletons.dart';
 

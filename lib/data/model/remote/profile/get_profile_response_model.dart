@@ -2,13 +2,12 @@ import 'package:project_office_monitoring_app/domain/entities/company_data_entit
 import 'package:project_office_monitoring_app/domain/entities/user_company_data_entity.dart';
 import 'package:project_office_monitoring_app/domain/entities/user_data_entity.dart';
 
-class SignInResponseModel {
+class GetProfileResponseModel {
   int? status;
   String? message;
-  String? userToken;
-  SignInResponseData? data;
+  GetProfileData? data;
 
-  SignInResponseModel({
+  GetProfileResponseModel({
     this.status,
     this.message,
     this.data,
@@ -24,6 +23,25 @@ class SignInResponseModel {
     }
   }
 
+  CompanyDataEntity? toCompanyDataEntity() {
+    if (data == null) {
+      return null;
+    } else {
+      return CompanyDataEntity(
+        companyStamp: data?.companyData?.companyStamp,
+        companyName: data?.companyData?.companyName,
+        companyEmail: data?.companyData?.companyEmail,
+        companyPhone: data?.companyData?.companyPhone,
+        picture: data?.companyData?.picture,
+        city: data?.companyData?.city,
+        state: data?.companyData?.state,
+        zip: data?.companyData?.zip,
+        address: data?.companyData?.address,
+        information: data?.companyData?.information,
+      );
+    }
+  }
+
   UserDataEntity toUserDataEntity() => UserDataEntity(
         userStamp: data?.userStamp,
         name: data?.name,
@@ -35,10 +53,10 @@ class SignInResponseModel {
         profilePicture: data?.profilePicture,
       );
 
-  factory SignInResponseModel.fromJson(Map<String, dynamic> json) => SignInResponseModel(
+  factory GetProfileResponseModel.fromJson(Map<String, dynamic> json) => GetProfileResponseModel(
         status: json["status"],
         message: json["message"],
-        data: json["Data"] == null ? null : SignInResponseData.fromJson(json["Data"]),
+        data: json["Data"] == null ? null : GetProfileData.fromJson(json["Data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,7 +66,7 @@ class SignInResponseModel {
       };
 }
 
-class SignInResponseData {
+class GetProfileData {
   String? userStamp;
   String? name;
   String? email;
@@ -57,9 +75,9 @@ class SignInResponseData {
   String? phone;
   int? typeuser;
   String? profilePicture;
-  CompanyData? companyData;
+  GetProfileCompanyData? companyData;
 
-  SignInResponseData({
+  GetProfileData({
     this.userStamp,
     this.name,
     this.email,
@@ -71,20 +89,7 @@ class SignInResponseData {
     this.companyData,
   });
 
-  CompanyDataEntity toCompanyDataEntity() => CompanyDataEntity.toLocal(
-        companyStamp: companyData?.companyStamp,
-        companyName: companyData?.companyName,
-        companyEmail: companyData?.companyEmail,
-        companyPhone: companyData?.companyPhone,
-        picture: companyData?.picture,
-        city: companyData?.city,
-        state: companyData?.state,
-        zip: companyData?.zip,
-        address: companyData?.address,
-        information: companyData?.information,
-      );
-
-  factory SignInResponseData.fromJson(Map<String, dynamic> json) => SignInResponseData(
+  factory GetProfileData.fromJson(Map<String, dynamic> json) => GetProfileData(
         userStamp: json["user_stamp"],
         name: json["name"],
         email: json["email"],
@@ -93,7 +98,7 @@ class SignInResponseData {
         phone: json["phone"],
         typeuser: json["typeuser"],
         profilePicture: json["profile_picture"],
-        companyData: json["company_data"] == null ? null : CompanyData.fromJson(json["company_data"]),
+        companyData: json["company_data"] == null ? null : GetProfileCompanyData.fromJson(json["company_data"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -109,7 +114,7 @@ class SignInResponseData {
       };
 }
 
-class CompanyData {
+class GetProfileCompanyData {
   String? companyStamp;
   String? companyName;
   String? companyEmail;
@@ -121,7 +126,7 @@ class CompanyData {
   String? address;
   String? information;
 
-  CompanyData({
+  GetProfileCompanyData({
     this.companyStamp,
     this.companyName,
     this.companyEmail,
@@ -134,7 +139,7 @@ class CompanyData {
     this.information,
   });
 
-  factory CompanyData.fromJson(Map<String, dynamic> json) => CompanyData(
+  factory GetProfileCompanyData.fromJson(Map<String, dynamic> json) => GetProfileCompanyData(
         companyStamp: json["company_stamp"],
         companyName: json["company_name"],
         companyEmail: json["company_email"],

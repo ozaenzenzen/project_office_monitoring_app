@@ -11,6 +11,7 @@ class AccountLocalRepository {
   String companyData = "companyData";
   String isLogin = "isLogin";
   String isActivationCodeActive = "isActivationCodeActive";
+  String userToken = "userToken";
 
   Future<void> setIsLogin(bool value) async {
     try {
@@ -107,6 +108,30 @@ class AccountLocalRepository {
       return result;
     } catch (e) {
       AppLogger.debugLog("[getUserData][error] $e");
+      return null;
+    }
+  }
+
+   Future<void> setUserToken(String data) async {
+    try {
+      AppInitConfig.localStorage.user.putSecure(
+        key: userToken,
+        data: data,
+      );
+    } catch (e) {
+      AppLogger.debugLog("[setUserToken][error] $e");
+      rethrow;
+    }
+  }
+
+  Future<String?> getUserToken() async {
+    try {
+      String result = await AppInitConfig.localStorage.user.getSecure(
+        key: userToken,
+      );
+      return result;
+    } catch (e) {
+      AppLogger.debugLog("[getUserToken][error] $e");
       return null;
     }
   }

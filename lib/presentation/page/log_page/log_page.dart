@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
-import 'package:project_office_monitoring_app/presentation/page/detail_log_page/detail_log_page.dart';
 import 'package:project_office_monitoring_app/presentation/specific_widget/location_item_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';

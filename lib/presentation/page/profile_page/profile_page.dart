@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/init_config.dart';
+import 'package:project_office_monitoring_app/presentation/page/profile_page/bloc/profile_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/signin_page/signin_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_appbar_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
+import 'package:skeletons/skeletons.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -16,6 +19,12 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
+  void initState() {
+    context.read<ProfileBloc>().add(GetProfileLocalAction());
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.border,
@@ -23,15 +32,22 @@ class _ProfilePageState extends State<ProfilePage> {
         title: 'Profile Page',
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            profilePictureSection(),
-            SizedBox(height: 12.h),
-            fieldSection(),
-            SizedBox(height: 12.h),
-            menuSection(),
-          ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<ProfileBloc>().add(GetProfileRemoteAction());
+        },
+        child: SingleChildScrollView(
+          // physics: const ScrollPhysics(),
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              profilePictureSection(),
+              SizedBox(height: 12.h),
+              fieldSection(),
+              SizedBox(height: 12.h),
+              menuSection(),
+            ],
+          ),
         ),
       ),
     );
@@ -55,18 +71,54 @@ class _ProfilePageState extends State<ProfilePage> {
             backgroundColor: Colors.transparent,
           ),
           SizedBox(height: 10.h),
-          Text(
-            "Testing Nama",
-            style: GoogleFonts.inter(
-              fontSize: 16.sp,
-            ),
+          BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              if (state is ProfileLoading) {
+                return SizedBox(
+                  width: 150.w,
+                  child: const SkeletonLine(),
+                );
+              } else if (state is ProfileSuccess) {
+                return Text(
+                  "${state.userData?.name}",
+                  style: GoogleFonts.inter(
+                    fontSize: 16.sp,
+                  ),
+                );
+              } else {
+                return Text(
+                  "",
+                  style: GoogleFonts.inter(
+                    fontSize: 16.sp,
+                  ),
+                );
+              }
+            },
           ),
           SizedBox(height: 6.h),
-          Text(
-            "Testing Jabatan",
-            style: GoogleFonts.inter(
-              fontSize: 12.sp,
-            ),
+          BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              if (state is ProfileLoading) {
+                return SizedBox(
+                  width: 250.w,
+                  child: const SkeletonLine(),
+                );
+              } else if (state is ProfileSuccess) {
+                return Text(
+                  "${state.userData?.jabatan}",
+                  style: GoogleFonts.inter(
+                    fontSize: 12.sp,
+                  ),
+                );
+              } else {
+                return Text(
+                  "",
+                  style: GoogleFonts.inter(
+                    fontSize: 12.sp,
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),
