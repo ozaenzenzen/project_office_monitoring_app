@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +20,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  TextEditingController jabatanController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
   @override
   void initState() {
     context.read<ProfileBloc>().add(GetProfileLocalAction());
@@ -63,12 +68,43 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       child: Column(
         children: [
-          const CircleAvatar(
-            radius: 30.0,
-            backgroundImage: NetworkImage(
-              "https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/1096555/0408-FlutterMessangerDemo-Luke_Social-e8a0e8ddab86b503a125ebcad823c583.png",
-            ),
-            backgroundColor: Colors.transparent,
+          BlocBuilder<ProfileBloc, ProfileState>(
+            builder: (context, state) {
+              if (state is ProfileLoading) {
+                return SkeletonAvatar(
+                  style: SkeletonAvatarStyle(
+                    shape: BoxShape.circle,
+                    width: 50.h,
+                    height: 50.h,
+                  ),
+                );
+              } else if (state is ProfileSuccess) {
+                if (state.userData!.profilePicture != null || state.userData!.profilePicture != "") {
+                  return CircleAvatar(
+                    radius: 30.0,
+                    backgroundImage: MemoryImage(
+                      base64Decode(
+                        state.userData!.profilePicture!,
+                      ),
+                    ),
+                    backgroundColor: Colors.transparent,
+                  );
+                } else {
+                  return const CircleAvatar(
+                    radius: 30.0,
+                    backgroundImage: NetworkImage(
+                      "https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/1096555/0408-FlutterMessangerDemo-Luke_Social-e8a0e8ddab86b503a125ebcad823c583.png",
+                    ),
+                    backgroundColor: Colors.transparent,
+                  );
+                }
+              } else {
+                return CircleAvatar(
+                  backgroundColor: AppColor.border,
+                  radius: 30.h,
+                );
+              }
+            },
           ),
           SizedBox(height: 10.h),
           BlocBuilder<ProfileBloc, ProfileState>(
@@ -126,27 +162,37 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget fieldSection() {
-    return Container(
-      color: AppColor.white,
-      width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.symmetric(
-        vertical: 16.h,
-        horizontal: 12.h,
-      ),
-      child: Column(
-        children: [
-          const AppTextFieldWidget(
-            textFieldTitle: "Posisi / Jabatan",
-            textFieldHintText: "Posisi / Jabatan",
-            readOnly: true,
-          ),
-          SizedBox(height: 12.h),
-          const AppTextFieldWidget(
-            textFieldTitle: "No Telepon",
-            textFieldHintText: "0808-0808-0808",
-            readOnly: true,
-          ),
-        ],
+    return BlocListener<ProfileBloc, ProfileState>(
+      listener: (context, state) {
+        if (state is ProfileSuccess) {
+          jabatanController.text = state.userData?.jabatan ?? "";
+          phoneController.text = state.userData?.phone ?? "";
+        }
+      },
+      child: Container(
+        color: AppColor.white,
+        width: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.symmetric(
+          vertical: 16.h,
+          horizontal: 12.h,
+        ),
+        child: Column(
+          children: [
+            AppTextFieldWidget(
+              textFieldTitle: "Posisi / Jabatan",
+              textFieldHintText: "Posisi / Jabatan",
+              readOnly: true,
+              controller: jabatanController,
+            ),
+            SizedBox(height: 12.h),
+            AppTextFieldWidget(
+              textFieldTitle: "No Telepon",
+              textFieldHintText: "0808-0808-0808",
+              readOnly: true,
+              controller: phoneController,
+            ),
+          ],
+        ),
       ),
     );
   }
