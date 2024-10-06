@@ -5,6 +5,7 @@ import 'package:project_office_monitoring_app/presentation/page/capture_page/cap
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/home_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/log_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/monitor_page/bloc/monitor_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/monitor_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/profile_page/profile_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_custom_appbar.dart';
@@ -61,6 +62,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     context.read<HomeBloc>().add(GetHomeData());
+    context.read<MonitorBloc>().add(GetListLocationAction());
     super.initState();
   }
 
