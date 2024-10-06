@@ -66,14 +66,14 @@ class _MyAppState extends State<MyApp> {
               if (state is LoginCheckerTrue) {
                 // isSignIn = true;
                 return MaterialApp(
-                  title: 'Vehicle Management Log',
+                  title: 'Office Monitor App',
                   theme: AppTheme.theme,
                   home: const MainPage(),
                 );
               } else {
                 // isSignIn = false;
                 return MaterialApp(
-                  title: 'Vehicle Management Log',
+                  title: 'Office Monitor App',
                   theme: AppTheme.theme,
                   home: const SignInPage(),
                 );
