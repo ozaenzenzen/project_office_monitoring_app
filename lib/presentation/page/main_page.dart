@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:project_office_monitoring_app/data/model/remote/monitor/get_list_log_request_model.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/home_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/log_page/bloc/log_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/log_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/bloc/monitor_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/monitor_page.dart';
@@ -18,12 +20,14 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage>  with TickerProviderStateMixin  {
   int indexClicked = 0;
 
   PageController pageController = PageController(
     initialPage: 0,
   );
+
+  late TabController tabController;
 
   void _selectedTab(int index) {
     // debugPrint("index masuk $index");
@@ -63,6 +67,20 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     context.read<HomeBloc>().add(GetHomeData());
     context.read<MonitorBloc>().add(GetListLocationAction());
+    context.read<LogBloc>().add(
+          GetListLogAction(
+            req: GetListLogRequestModel(
+              startDate: DateTime(2010),
+              endDate: DateTime.now(),
+              limit: 10,
+              currentPage: 1,
+            ),
+          ),
+        );
+    tabController = TabController(
+      vsync: this,
+      length: 2,
+    );
     super.initState();
   }
 
@@ -116,7 +134,9 @@ class _MainPageState extends State<MainPage> {
           MonitorPage(
             pageController: pageController,
           ),
-          const LogPage(),
+          LogPage(
+            tabController: tabController,
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(

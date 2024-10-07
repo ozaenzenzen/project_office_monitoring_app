@@ -5,6 +5,7 @@ class AppApiPath {
   static const String initializePlatform = "/platform/initialize";
 
   static const String getListLocation = "/monitor/getlistlocation";
+  static const String getListLog = "/monitor/getlistlog";
 
   // static const String register = "/register";
   // static const String stories = "/stories";

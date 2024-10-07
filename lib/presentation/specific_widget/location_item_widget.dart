@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_office_monitoring_app/domain/entities/get_list_log_data_entity.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
+import 'package:project_office_monitoring_app/support/app_date_time_helper.dart';
 
 class LocationItemWidget extends StatelessWidget {
   final int index;
   final Function()? onTap;
   final String title;
-  final dynamic data;
+  final GetListLogDataEntity? data;
 
   const LocationItemWidget({
     super.key,
@@ -21,19 +23,20 @@ class LocationItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap ?? () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return CapturePage(
-                location: "Location $index",
-                capturePageActionEnum: CapturePageActionEnum.details,
-              );
-            },
-          ),
-        );
-      },
+      onTap: onTap ??
+          () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CapturePage(
+                    location: "Location $index",
+                    capturePageActionEnum: CapturePageActionEnum.details,
+                  );
+                },
+              ),
+            );
+          },
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 16.h,
@@ -58,7 +61,8 @@ class LocationItemWidget extends StatelessWidget {
                 ),
                 SizedBox(width: 10.h),
                 Text(
-                  "Location $index",
+                  // "Location $index",
+                  "${data?.listData?[index].monitorData?.location}",
                   style: GoogleFonts.inter(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -74,24 +78,31 @@ class LocationItemWidget extends StatelessWidget {
                   height: 60.h,
                 ),
                 SizedBox(width: 10.h),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "$title $index",
-                      style: GoogleFonts.inter(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        // "$title $index",
+                        "${data?.listData?[index].userData?.firstName} ${data?.listData?[index].userData?.lastName}",
+                        style: GoogleFonts.inter(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 5.h),
-                    Text(
-                      "$index Jam yang lalu",
-                      style: GoogleFonts.inter(
-                        fontSize: 12.sp,
+                      SizedBox(height: 5.h),
+                      Text(
+                        // "$index Jam yang lalu",
+                        AppDateTimeHelper.formatTimeDifference(
+                          data?.listData?[index].monitorData?.createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+                        ),
+                        // "${data?.listData?[index].monitorData?.createdAt}",
+                        style: GoogleFonts.inter(
+                          fontSize: 12.sp,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 Icon(

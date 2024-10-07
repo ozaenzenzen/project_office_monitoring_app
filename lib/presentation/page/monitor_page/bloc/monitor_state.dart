@@ -8,7 +8,7 @@ final class MonitorInitial extends MonitorState {}
 final class MonitorLoading extends MonitorState {}
 
 final class MonitorSuccess extends MonitorState {
-  List<GetListLocationDataEntity?>? result;
+  final List<GetListLocationDataEntity?>? result;
 
   MonitorSuccess({
     this.result,

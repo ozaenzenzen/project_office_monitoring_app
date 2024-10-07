@@ -2,25 +2,27 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:project_office_monitoring_app/data/model/remote/monitor/get_list_location_response_model.dart';
+import 'package:project_office_monitoring_app/data/model/remote/monitor/get_list_log_request_model.dart';
+import 'package:project_office_monitoring_app/data/model/remote/monitor/get_list_log_response_model.dart';
 import 'package:project_office_monitoring_app/data/repository/local/account_local_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/local/platform_local_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/monitor_repository.dart';
-import 'package:project_office_monitoring_app/domain/entities/get_list_location_data_entity.dart';
+import 'package:project_office_monitoring_app/domain/entities/get_list_log_data_entity.dart';
 import 'package:project_office_monitoring_app/domain/entities/initialize_platform_data_entity.dart';
 
-part 'monitor_event.dart';
-part 'monitor_state.dart';
+part 'log_event.dart';
+part 'log_state.dart';
 
-class MonitorBloc extends Bloc<MonitorEvent, MonitorState> {
-  MonitorBloc(
+class LogBloc extends Bloc<LogEvent, LogState> {
+  LogBloc(
     MonitorRepository monitorRepository,
     AccountLocalRepository accountLocalRepository,
     PlatformLocalRepository platformLocalRepository,
-  ) : super(MonitorInitial()) {
-    on<MonitorEvent>((event, emit) {
-      if (event is GetListLocationAction) {
-        _getListLocationAction(
+  ) : super(LogInitial()) {
+    on<LogEvent>((event, emit) {
+      if (event is GetListLogAction) {
+        _getListLogAction(
+          event,
           monitorRepository,
           accountLocalRepository,
           platformLocalRepository,
@@ -29,18 +31,19 @@ class MonitorBloc extends Bloc<MonitorEvent, MonitorState> {
     });
   }
 
-  Future<void> _getListLocationAction(
+  Future<void> _getListLogAction(
+    GetListLogAction event,
     MonitorRepository monitorRepository,
     AccountLocalRepository accountLocalRepository,
     PlatformLocalRepository platformLocalRepository,
   ) async {
-    emit(MonitorLoading());
+    emit(LogLoading());
     await Future.delayed(const Duration(milliseconds: 500));
     try {
       InitializePlatformDataEntity? platformData = await platformLocalRepository.getActivationCode();
       if (platformData == null) {
         emit(
-          MonitorFailed(
+          LogFailed(
             errorMessage: "data support is empty",
           ),
         );
@@ -49,41 +52,40 @@ class MonitorBloc extends Bloc<MonitorEvent, MonitorState> {
       String? userToken = await accountLocalRepository.getUserToken();
       if (userToken == null) {
         emit(
-          MonitorFailed(
+          LogFailed(
             errorMessage: "data support is empty",
           ),
         );
         return;
       }
 
-      GetListLocationResponseModel? result = await monitorRepository.getListLocation(
+      GetListLogResponseModel? result = await monitorRepository.getListLog(
         platformKey: platformData.platformKey!,
         userToken: userToken,
+        req: event.req,
       );
       if (result != null) {
         if (result.status == 200) {
-          emit(
-            MonitorSuccess(
-              result: result.toEntity() ?? [],
-            ),
-          );
+          emit(LogSuccess(
+            result: result.toEntity(),
+          ));
         } else {
           emit(
-            MonitorFailed(
+            LogFailed(
               errorMessage: "${result.message}",
             ),
           );
         }
       } else {
         emit(
-          MonitorFailed(
-            errorMessage: "Data support is empty",
+          LogFailed(
+            errorMessage: "Data is empty",
           ),
         );
       }
     } catch (e) {
       emit(
-        MonitorFailed(
+        LogFailed(
           errorMessage: "$e",
         ),
       );
