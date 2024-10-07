@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class AppDateTimeHelper {
@@ -36,5 +38,48 @@ class AppDateTimeHelper {
       String formattedDate = DateFormat('d MMMM yyyy', 'id_ID').format(parsedDate);
       return formattedDate;
     }
+  }
+
+  Future<DateTimeRange?> dateRangePicker(
+    BuildContext context,{
+      DateTime? startDate,
+      DateTime? endDate,
+    }
+  ) {
+    return showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+      initialDateRange: DateTimeRange(
+        start: startDate ?? DateTime.now().subtract(const Duration(days: 1)),
+        end: endDate ?? DateTime.now(),
+      ),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xff4F54DE),
+              onPrimary: Colors.white,
+              surface: Colors.white,
+            ),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color(0xff4F54DE),
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 330.w,
+                  maxHeight: 550.h,
+                ),
+                child: child,
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 }

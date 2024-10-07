@@ -5,7 +5,8 @@ import 'package:project_office_monitoring_app/data/model/remote/monitor/get_list
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/home_page.dart';
-import 'package:project_office_monitoring_app/presentation/page/log_page/bloc/log_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_location_bloc/get_log_location_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_staff_bloc/get_log_staff_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/log_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/bloc/monitor_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/monitor_page.dart';
@@ -20,7 +21,8 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage>  with TickerProviderStateMixin  {
+class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
+// class _MainPageState extends State<MainPage> {
   int indexClicked = 0;
 
   PageController pageController = PageController(
@@ -28,6 +30,15 @@ class _MainPageState extends State<MainPage>  with TickerProviderStateMixin  {
   );
 
   late TabController tabController;
+
+  ScrollPhysics scrollPhysicsStaff = const ScrollPhysics();
+  ScrollPhysics scrollPhysicsLocation = const ScrollPhysics();
+
+  ScrollController scrollControllerStaff = ScrollController();
+  ScrollController scrollControllerLocation = ScrollController();
+
+  // ScrollPhysics? scrollPhysics;
+  // ScrollController? scrollController;
 
   void _selectedTab(int index) {
     // debugPrint("index masuk $index");
@@ -67,13 +78,24 @@ class _MainPageState extends State<MainPage>  with TickerProviderStateMixin  {
   void initState() {
     context.read<HomeBloc>().add(GetHomeData());
     context.read<MonitorBloc>().add(GetListLocationAction());
-    context.read<LogBloc>().add(
-          GetListLogAction(
+    context.read<GetLogLocationBloc>().add(
+          GetLogLocationAction(
             req: GetListLogRequestModel(
               startDate: DateTime(2010),
               endDate: DateTime.now(),
               limit: 10,
               currentPage: 1,
+            ),
+          ),
+        );
+    context.read<GetLogStaffBloc>().add(
+          GetLogStaffAction(
+            req: GetListLogRequestModel(
+              startDate: DateTime(2010),
+              endDate: DateTime.now(),
+              limit: 10,
+              currentPage: 1,
+              staffUserStamp: true,
             ),
           ),
         );
@@ -83,6 +105,8 @@ class _MainPageState extends State<MainPage>  with TickerProviderStateMixin  {
     );
     super.initState();
   }
+
+  // final PageStorageBucket _bucket = PageStorageBucket();
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +159,12 @@ class _MainPageState extends State<MainPage>  with TickerProviderStateMixin  {
             pageController: pageController,
           ),
           LogPage(
+            // bucket: _bucket,
             tabController: tabController,
+            scrollPhysicsStaff: scrollPhysicsStaff,
+            scrollPhysicsLocation: scrollPhysicsLocation,
+            scrollControllerStaff: scrollControllerStaff,
+            scrollControllerLocation: scrollControllerLocation,
           ),
         ],
       ),

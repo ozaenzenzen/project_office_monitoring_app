@@ -10,7 +10,8 @@ class LocationItemWidget extends StatelessWidget {
   final int index;
   final Function()? onTap;
   final String title;
-  final GetListLogDataEntity? data;
+  // final GetListLogDataEntity? data;
+  final List<ListDatumEntity>? data;
 
   const LocationItemWidget({
     super.key,
@@ -62,7 +63,7 @@ class LocationItemWidget extends StatelessWidget {
                 SizedBox(width: 10.h),
                 Text(
                   // "Location $index",
-                  "${data?.listData?[index].monitorData?.location}",
+                  "${data?[index].monitorData?.location} $index",
                   style: GoogleFonts.inter(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,
@@ -84,7 +85,7 @@ class LocationItemWidget extends StatelessWidget {
                     children: [
                       Text(
                         // "$title $index",
-                        "${data?.listData?[index].userData?.firstName} ${data?.listData?[index].userData?.lastName}",
+                        "${data?[index].userData?.firstName} ${data?[index].userData?.lastName}",
                         style: GoogleFonts.inter(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -94,7 +95,7 @@ class LocationItemWidget extends StatelessWidget {
                       Text(
                         // "$index Jam yang lalu",
                         AppDateTimeHelper.formatTimeDifference(
-                          data?.listData?[index].monitorData?.createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
+                          data?[index].monitorData?.createdAt?.toIso8601String() ?? DateTime.now().toIso8601String(),
                         ),
                         // "${data?.listData?[index].monitorData?.createdAt}",
                         style: GoogleFonts.inter(

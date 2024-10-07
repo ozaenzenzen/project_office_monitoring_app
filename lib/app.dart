@@ -7,7 +7,8 @@ import 'package:project_office_monitoring_app/data/repository/remote/account_rep
 import 'package:project_office_monitoring_app/data/repository/remote/monitor_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/platform_repository.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
-import 'package:project_office_monitoring_app/presentation/page/log_page/bloc/log_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_location_bloc/get_log_location_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_staff_bloc/get_log_staff_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/bloc/monitor_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/profile_page/bloc/profile_bloc.dart';
@@ -55,7 +56,14 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         BlocProvider(
-          create: (context) => LogBloc(
+          create: (context) => GetLogLocationBloc(
+            MonitorRepository(),
+            AccountLocalRepository(),
+            PlatformLocalRepository(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => GetLogStaffBloc(
             MonitorRepository(),
             AccountLocalRepository(),
             PlatformLocalRepository(),
