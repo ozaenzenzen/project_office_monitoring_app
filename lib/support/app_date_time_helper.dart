@@ -35,7 +35,8 @@ class AppDateTimeHelper {
     } else if (hours < 24) {
       return '$hours Jam yang lalu';
     } else {
-      String formattedDate = DateFormat('d MMMM yyyy', 'id_ID').format(parsedDate);
+      // String formattedDate = DateFormat('d MMMM yyyy', 'id_ID').format(parsedDate);
+      String formattedDate = DateFormat('d MMMM yyyy').format(parsedDate);
       return formattedDate;
     }
   }
