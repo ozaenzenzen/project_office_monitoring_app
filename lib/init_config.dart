@@ -18,7 +18,7 @@ class AppInitConfig {
     // EnvironmentConfig.customBaseUrl = "http://10.0.2.2:8080"; // for emulator android
     // EnvironmentConfig.customBaseUrl = "https://7c30-114-10-42-165.ngrok-free.app"; // for emulator android
     // EnvironmentConfig.customBaseUrl = "https://6feb-114-10-42-165.ngrok-free.app"; // for emulator android
-    EnvironmentConfig.customBaseUrl = "https://db0f-114-10-42-165.ngrok-free.app"; // for emulator android
+    EnvironmentConfig.customBaseUrl = "https://20d5-114-10-42-165.ngrok-free.app"; // for emulator android
     // EnvironmentConfig.customBaseUrl = "http://localhost:8080"; // for emulator iOS
   }
 

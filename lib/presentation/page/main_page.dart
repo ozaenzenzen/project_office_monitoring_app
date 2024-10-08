@@ -77,31 +77,32 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    context.read<HomeBloc>().add(GetHomeData());
-    context.read<MonitorBloc>().add(GetListLocationAction());
-    context.read<GetLogLocationBloc>().add(
-          GetLogLocationAction(
-            req: GetListLogRequestModel(
-              startDate: DateTime(2010),
-              endDate: DateTime.now(),
-              limit: 10,
-              currentPage: 1,
-              typeLog: TypeLog.location,
-            ),
+    context
+      ..read<HomeBloc>().add(GetHomeData())
+      ..read<MonitorBloc>().add(GetListLocationAction())
+      ..read<GetLogLocationBloc>().add(
+        GetLogLocationAction(
+          req: GetListLogRequestModel(
+            startDate: DateTime(2010),
+            endDate: DateTime.now(),
+            limit: 10,
+            currentPage: 1,
+            typeLog: TypeLog.location,
           ),
-        );
-    context.read<GetLogStaffBloc>().add(
-          GetLogStaffAction(
-            req: GetListLogRequestModel(
-              startDate: DateTime(2010),
-              endDate: DateTime.now(),
-              limit: 10,
-              currentPage: 1,
-              typeLog: TypeLog.staff,
-              staffUserStamp: true,
-            ),
+        ),
+      )
+      ..read<GetLogStaffBloc>().add(
+        GetLogStaffAction(
+          req: GetListLogRequestModel(
+            startDate: DateTime(2010),
+            endDate: DateTime.now(),
+            limit: 10,
+            currentPage: 1,
+            typeLog: TypeLog.staff,
+            staffUserStamp: true,
           ),
-        );
+        ),
+      );
     tabController = TabController(
       vsync: this,
       length: 2,

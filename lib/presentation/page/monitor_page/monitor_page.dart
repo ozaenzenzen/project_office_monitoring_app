@@ -49,6 +49,7 @@ class _MonitorPageState extends State<MonitorPage> {
                   if (state is MonitorLoading) {
                     // return const AppLoadingIndicator();
                     return ListView.separated(
+                      shrinkWrap: true,
                       itemCount: 18,
                       itemBuilder: (context, index) {
                         return SkeletonLine(
