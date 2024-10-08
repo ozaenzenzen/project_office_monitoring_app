@@ -6,15 +6,25 @@ import 'package:image_picker/image_picker.dart';
 class AppImagePickerService {
   static final ImagePicker _picker = ImagePicker();
 
-  static Future<XFile?> getImage() async {
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  static Future<XFile?> getImage({
+    ImageSource imageSource = ImageSource.gallery,
+  }) async {
+    final XFile? image = await _picker.pickImage(
+      // source: ImageSource.gallery,
+      source: imageSource,
+      preferredCameraDevice: CameraDevice.rear,
+    );
     return image;
   }
 
-  static Future<String?> getImageAsBase64() async {
+  static Future<String?> getImageAsBase64({
+    ImageSource imageSource = ImageSource.gallery,
+  }) async {
     try {
       final XFile? image = await _picker.pickImage(
-        source: ImageSource.gallery,
+        // source: ImageSource.gallery,
+        source: imageSource,
+        preferredCameraDevice: CameraDevice.rear,
         imageQuality: 10,
       );
       File fileFormat = File(image!.path);
@@ -25,12 +35,15 @@ class AppImagePickerService {
     }
   }
 
-   static Future<File?> getImageAsFile(ImageSource imageSource) async {
+  static Future<File?> getImageAsFile({
+    ImageSource imageSource = ImageSource.gallery,
+  }) async {
     try {
       final XFile? image = await _picker.pickImage(
         // source: ImageSource.gallery,
         source: imageSource,
-        imageQuality: 50,
+        preferredCameraDevice: CameraDevice.rear,
+        imageQuality: 30,
         maxHeight: 400,
         maxWidth: 400,
       );

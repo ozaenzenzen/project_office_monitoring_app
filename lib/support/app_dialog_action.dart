@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_container_box_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
 import 'package:project_office_monitoring_app/support/app_assets.dart';
+import 'package:project_office_monitoring_app/support/app_image_picker.dart';
 
 class AppDialogAction {
   static Future<void> showSuccessSignUp({
@@ -191,17 +193,17 @@ class AppDialogAction {
           mainButtonAction == null
               ? const SizedBox()
               : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 24.h),
-                  AppMainButtonWidget(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 24.h),
+                    AppMainButtonWidget(
                       onPressed: mainButtonAction,
                       text: buttonTitle,
                       fontSize: buttonTextSize ?? 18.sp,
                       height: buttonHeight ?? 48.h,
                     ),
-                ],
-              ),
+                  ],
+                ),
         ],
       ),
       barrierDismissible: barrierDismissible,
@@ -448,6 +450,128 @@ class AppDialogAction {
           () {
             Navigator.pop(context);
           },
+    );
+  }
+
+  static Future<void> showChooseImageBottomSheet(
+    BuildContext context, {
+    void Function(String image)? onSuccess,
+  }) async {
+    String base64ImageChosen = "";
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          padding: EdgeInsets.all(16.h),
+          color: Colors.white,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () async {
+                  base64ImageChosen = await AppImagePickerService.getImageAsBase64(
+                    imageSource: ImageSource.gallery,
+                  ).then(
+                    (value) {
+                      if (value != null) {
+                        return value;
+                      } else {
+                        return "";
+                      }
+                    },
+                  );
+                  onSuccess?.call(base64ImageChosen);
+                },
+                child: Container(
+                  height: 120.h,
+                  width: 120.h,
+                  padding: EdgeInsets.all(10.h),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.black12,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.image,
+                        size: 50.h,
+                      ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        "From Gallery",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 12.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: 20.w),
+              InkWell(
+                onTap: () async {
+                  base64ImageChosen = await AppImagePickerService.getImageAsBase64(
+                    imageSource: ImageSource.gallery,
+                  ).then(
+                    (value) {
+                      if (value != null) {
+                        return value;
+                      } else {
+                        return "";
+                      }
+                    },
+                  );
+                  onSuccess?.call(base64ImageChosen);
+                },
+                child: Container(
+                  height: 120.h,
+                  width: 120.h,
+                  padding: EdgeInsets.all(10.h),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.black12,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.image_search_outlined,
+                        size: 50.h,
+                      ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        "From Image",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.inter(
+                          fontSize: 12.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // child: Text("Bottom Sheet"),
+        );
+      },
     );
   }
 }
