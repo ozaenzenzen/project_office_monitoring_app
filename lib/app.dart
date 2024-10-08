@@ -6,6 +6,7 @@ import 'package:project_office_monitoring_app/data/repository/local/platform_loc
 import 'package:project_office_monitoring_app/data/repository/remote/account_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/monitor_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/platform_repository.dart';
+import 'package:project_office_monitoring_app/presentation/page/capture_page/bloc/capture_location_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_location_page/bloc/detail_location_log_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_location_bloc/get_log_location_bloc.dart';
@@ -58,6 +59,13 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => GetLogLocationBloc(
+            MonitorRepository(),
+            AccountLocalRepository(),
+            PlatformLocalRepository(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => CaptureLocationBloc(
             MonitorRepository(),
             AccountLocalRepository(),
             PlatformLocalRepository(),

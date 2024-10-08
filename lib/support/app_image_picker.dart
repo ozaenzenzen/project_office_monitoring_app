@@ -25,7 +25,7 @@ class AppImagePickerService {
         // source: ImageSource.gallery,
         source: imageSource,
         preferredCameraDevice: CameraDevice.rear,
-        imageQuality: 10,
+        imageQuality: 20,
       );
       File fileFormat = File(image!.path);
       String base64Image = base64Encode(fileFormat.readAsBytesSync());

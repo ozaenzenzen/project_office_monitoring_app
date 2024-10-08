@@ -63,33 +63,39 @@ class _DetailLocationPageState extends State<DetailLocationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          backgroundColor: AppColor.white,
-          appBar: AppAppBarWidget(
-            title: 'List Log of $location',
-            elevation: 0,
+    return WillPopScope(
+      onWillPop: () async {
+        listData = [];
+        return true;
+      },
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: AppColor.white,
+            appBar: AppAppBarWidget(
+              title: 'List Log of $location',
+              elevation: 0,
+            ),
+            body: Column(
+              children: [
+                dateFilterWidget(context),
+                listViewWidget(),
+              ],
+            ),
           ),
-          body: Column(
-            children: [
-              dateFilterWidget(context),
-              listViewWidget(),
-            ],
+          BlocListener<DetailLocationLogBloc, DetailLocationLogState>(
+            listener: (context, state) {
+              if (state is DetailLocationLogLoading) {
+                isLoadingActive = true;
+              } else {
+                isLoadingActive = false;
+              }
+              setState(() {});
+            },
+            child: (isLoadingActive) ? const AppOverlayLoading2Widget() : const SizedBox(),
           ),
-        ),
-        BlocListener<DetailLocationLogBloc, DetailLocationLogState>(
-          listener: (context, state) {
-            if (state is DetailLocationLogLoading) {
-              isLoadingActive = true;
-            } else {
-              isLoadingActive = false;
-            }
-            setState(() {});
-          },
-          child: (isLoadingActive) ? const AppOverlayLoading2Widget() : const SizedBox(),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
