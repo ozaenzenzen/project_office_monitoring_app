@@ -83,22 +83,23 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       ..read<GetLogLocationBloc>().add(
         GetLogLocationAction(
           req: GetListLogRequestModel(
+            typeLog: TypeLog.location,
+            typeAction: TypeAction.refresh,
             startDate: DateTime(2010),
             endDate: DateTime.now(),
             limit: 10,
-            currentPage: 1,
-            typeLog: TypeLog.location,
+            staffUserStamp: false,
           ),
         ),
       )
       ..read<GetLogStaffBloc>().add(
         GetLogStaffAction(
           req: GetListLogRequestModel(
+            typeLog: TypeLog.staff,
+            typeAction: TypeAction.refresh,
             startDate: DateTime(2010),
             endDate: DateTime.now(),
             limit: 10,
-            currentPage: 1,
-            typeLog: TypeLog.staff,
             staffUserStamp: true,
           ),
         ),
