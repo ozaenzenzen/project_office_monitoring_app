@@ -60,7 +60,9 @@ class MonitorRepository {
         request: reqData,
         header: header,
       );
-      return GetListLogResponseModel.fromJson(response.data);
+      GetListLogResponseModel mappingData = GetListLogResponseModel.fromJson(response.data);
+      AppLogger.debugLog("resp ${jsonEncode(mappingData.toJson())}");
+      return mappingData;
     } catch (errorMessage) {
       AppLogger.debugLog("[MonitorRepository][getListLog] errorMessage $errorMessage");
       rethrow;
