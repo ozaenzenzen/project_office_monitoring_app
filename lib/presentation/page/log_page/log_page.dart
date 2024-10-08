@@ -184,7 +184,7 @@ class _LogPageState extends State<LogPage> with AutomaticKeepAliveClientMixin {
             horizontal: 12.h,
           ),
           child: Text(
-            "Log Page: Location View",
+            "Log Page: All View",
             style: GoogleFonts.inter(
               fontSize: 32.sp,
               fontWeight: FontWeight.w700,
