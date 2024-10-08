@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_location_page/detail_location_page.dart';
+import 'package:project_office_monitoring_app/presentation/page/detail_location_page/detail_location_top_handler.dart';
 import 'package:project_office_monitoring_app/presentation/page/monitor_page/bloc/monitor_bloc.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 import 'package:skeletons/skeletons.dart';
@@ -70,6 +71,8 @@ class _MonitorPageState extends State<MonitorPage> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
+                            DetailLocationTopHandler().data = state.result![index]!.location!;
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(

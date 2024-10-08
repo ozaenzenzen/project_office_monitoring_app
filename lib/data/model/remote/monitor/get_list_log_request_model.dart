@@ -19,7 +19,7 @@ class GetListLogRequestModel {
     this.limit,
     this.currentPage,
     this.location,
-    this.staffUserStamp = false,
+    this.staffUserStamp,
   });
 
   factory GetListLogRequestModel.fromJson(Map<String, dynamic> json) => GetListLogRequestModel(

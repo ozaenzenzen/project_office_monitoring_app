@@ -57,13 +57,14 @@ class LocationItemWidget extends StatelessWidget {
             Row(
               children: [
                 Icon(
-                  Icons.security,
+                  Icons.place,
                   size: 16.h,
+                  color: AppColor.red,
                 ),
                 SizedBox(width: 10.h),
                 Text(
                   // "Location $index",
-                  "${data?[index].monitorData?.location} $index",
+                  "${data?[index].monitorData?.location}",
                   style: GoogleFonts.inter(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w600,

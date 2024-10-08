@@ -223,6 +223,7 @@ class _LogPageState extends State<LogPage> with AutomaticKeepAliveClientMixin {
                           endDate: output.end,
                           limit: 10,
                           currentPage: 1,
+                          staffUserStamp: false,
                         ),
                       ),
                     );
@@ -264,6 +265,7 @@ class _LogPageState extends State<LogPage> with AutomaticKeepAliveClientMixin {
                             startDate: startDateLocation,
                             endDate: endDateLocation,
                             limit: 10,
+                            staffUserStamp: false,
                           ),
                         ),
                       );
@@ -277,6 +279,7 @@ class _LogPageState extends State<LogPage> with AutomaticKeepAliveClientMixin {
                             startDate: startDateLocation,
                             endDate: endDateLocation,
                             limit: 10,
+                            staffUserStamp: false,
                           ),
                         ),
                       );
