@@ -185,9 +185,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return const CapturePage(
-                      capturePageActionEnum: CapturePageActionEnum.capture,
-                    );
+                    return const CapturePage.capture();
                   },
                 ),
               );

@@ -5,4 +5,5 @@ class AppAssets {
   static String iconPopupWarning = "assets/icon_popup_warning.png";
   static String imgEmptyState = "assets/img_empty_state.png";
   static String imgEmptyStateBlue = "assets/img_empty_state_blue.png";
+  static String imgDefaultPicture = "assets/default_picture.jpg";
 }

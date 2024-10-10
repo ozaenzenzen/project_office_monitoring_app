@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_log_page/detail_log_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
+import 'package:project_office_monitoring_app/support/app_assets.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -83,9 +84,17 @@ class _HomePageState extends State<HomePage> {
         children: [
           Image.network(
             "https://yogabayuap.com/wp-content/uploads/2023/01/60bb4a2e143f632da3e56aea_Flutter-app-development-2.png",
-            fit: BoxFit.cover,
             height: 180.h,
             width: MediaQuery.of(context).size.width,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return Image.asset(
+                AppAssets.imgDefaultPicture,
+                height: 180.h,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.cover,
+              );
+            },
           ),
           Padding(
             padding: EdgeInsets.symmetric(
@@ -215,6 +224,14 @@ class _HomePageState extends State<HomePage> {
                           fit: BoxFit.cover,
                           height: 200.h,
                           width: 140.w,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              AppAssets.imgDefaultPicture,
+                              height: 140.h,
+                              width: 200.w,
+                              fit: BoxFit.cover,
+                            );
+                          },
                         ),
                       ),
                       Align(
@@ -278,6 +295,14 @@ class _HomePageState extends State<HomePage> {
                         fit: BoxFit.cover,
                         height: 140.h,
                         width: 200.w,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            AppAssets.imgDefaultPicture,
+                            height: 140.h,
+                            width: 200.w,
+                            fit: BoxFit.cover,
+                          );
+                        },
                       ),
                     ),
                     SizedBox(width: 10.w),

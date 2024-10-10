@@ -7,12 +7,14 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_office_monitoring_app/data/model/remote/capture/capture_location_request_model.dart';
+import 'package:project_office_monitoring_app/domain/entities/get_list_log_data_entity.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/bloc/capture_location_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_appbar_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_main_button_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_overlay_loading2_widget.dart';
 import 'package:project_office_monitoring_app/presentation/widget/app_textfield_widget.dart';
+import 'package:project_office_monitoring_app/support/app_assets.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 import 'package:project_office_monitoring_app/support/app_dialog_action.dart';
 import 'package:project_office_monitoring_app/support/app_image_picker.dart';
@@ -24,12 +26,26 @@ enum CapturePageActionEnum { capture, details }
 class CapturePage extends StatefulWidget {
   final String? location;
   final CapturePageActionEnum capturePageActionEnum;
+  final ListDatumEntity? data;
 
-  const CapturePage({
+  // const CapturePage({
+  //   super.key,
+  //   this.location,
+  //   required this.capturePageActionEnum,
+  //   this.data,
+  // });
+
+  const CapturePage.capture({
     super.key,
     this.location,
-    required this.capturePageActionEnum,
-  });
+  })  : capturePageActionEnum = CapturePageActionEnum.capture,
+        data = null;
+
+  const CapturePage.details({
+    super.key,
+    this.location,
+    required this.data,
+  }) : capturePageActionEnum = CapturePageActionEnum.details;
 
   @override
   State<CapturePage> createState() => _CapturePageState();
@@ -41,17 +57,28 @@ class _CapturePageState extends State<CapturePage> {
 
   Position? currentPosition;
 
+  String? latitude;
+  String? longitude;
+
   @override
   void initState() {
     super.initState();
     if (widget.location != null || widget.capturePageActionEnum == CapturePageActionEnum.details) {
-      cekpoinController.text = widget.location!;
-    }
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      currentPosition = await AppLocationService.getCurrentPosition();
-      AppLogger.debugLog("$currentPosition");
+      // cekpoinController.text = widget.location!;
+      cekpoinController.text = widget.data!.monitorData!.location!;
+      keteranganController.text = widget.data!.monitorData!.information!;
+      base64Image = widget.data!.monitorData!.picture!;
+      latitude = widget.data!.monitorData!.latitude!;
+      longitude = widget.data!.monitorData!.longitude!;
+    } else {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        currentPosition = await AppLocationService.getCurrentPosition();
+        AppLogger.debugLog("$currentPosition");
+        latitude = currentPosition!.latitude.toString();
+        longitude = currentPosition!.longitude.toString();
+      });
       setState(() {});
-    });
+    }
   }
 
   String? base64Image = "";
@@ -81,11 +108,26 @@ class _CapturePageState extends State<CapturePage> {
                       );
                       setState(() {});
                     },
-                    child: (base64Image != null && base64Image != "")
-                        ? Image.memory(
-                            // height: 240.h,
-                            base64Decode(base64Image!),
-                          )
+                    child: (widget.capturePageActionEnum == CapturePageActionEnum.details)
+                        ? (base64Image != null && base64Image != "" && base64Image!.length > 50)
+                            ? Image.memory(
+                                // height: 240.h,
+                                base64Decode(base64Image!),
+                              )
+                            : Image.network(
+                                "https://cdn.mos.cms.futurecdn.net/SXtKY6DhYhKeSXL9BhX9s9.jpg",
+                                height: 240.h,
+                                // height: 60.h,
+                                // width: 100.w,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    AppAssets.imgDefaultPicture,
+                                    height: 240.h,
+                                    fit: BoxFit.cover,
+                                  );
+                                },
+                              )
                         : Container(
                             height: 240.h,
                             color: Colors.black26,
@@ -122,7 +164,8 @@ class _CapturePageState extends State<CapturePage> {
                         ),
                         SizedBox(width: 10.w),
                         Text(
-                          "${currentPosition?.latitude}, ${currentPosition?.longitude}",
+                          // "${currentPosition?.latitude}, ${currentPosition?.longitude}",
+                          "$latitude, $longitude",
                           // "0,888, 0,999",
                           style: GoogleFonts.inter(
                             fontSize: 12.sp,
@@ -140,6 +183,7 @@ class _CapturePageState extends State<CapturePage> {
                       textFieldTitle: "Cekpoin / lokasi",
                       textFieldHintText: "Cekpoin / lokasi",
                       controller: cekpoinController,
+                      readOnly: (widget.capturePageActionEnum == CapturePageActionEnum.details) ? true : false,
                     ),
                   ),
                   SizedBox(height: 12.h),
@@ -152,6 +196,7 @@ class _CapturePageState extends State<CapturePage> {
                       textFieldHintText: "Berita / Keterangan",
                       maxLines: 6,
                       controller: keteranganController,
+                      readOnly: (widget.capturePageActionEnum == CapturePageActionEnum.details) ? true : false,
                     ),
                   ),
                   SizedBox(height: 24.h),

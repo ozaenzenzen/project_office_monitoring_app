@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project_office_monitoring_app/domain/entities/get_list_log_data_entity.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
+import 'package:project_office_monitoring_app/support/app_assets.dart';
 import 'package:project_office_monitoring_app/support/app_color.dart';
 import 'package:project_office_monitoring_app/support/app_date_time_helper.dart';
 
@@ -30,9 +33,9 @@ class LocationItemWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CapturePage(
+                  return CapturePage.details(
                     location: "Location $index",
-                    capturePageActionEnum: CapturePageActionEnum.details,
+                    data: data![index],
                   );
                 },
               ),
@@ -75,10 +78,27 @@ class LocationItemWidget extends StatelessWidget {
             SizedBox(height: 10.h),
             Row(
               children: [
-                Image.network(
-                  "https://cdn.mos.cms.futurecdn.net/SXtKY6DhYhKeSXL9BhX9s9.jpg",
-                  height: 60.h,
-                ),
+                (data?[index].monitorData?.picture != null && data?[index].monitorData?.picture != "" && data![index].monitorData!.picture!.length > 50)
+                    ? Image.memory(
+                        base64Decode(data![index].monitorData!.picture!),
+                        height: 60.h,
+                        width: 100.w,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        "https://cdn.mos.cms.futurecdn.net/SXtKY6DhYhKeSXL9BhX9s9.jpg",
+                        height: 60.h,
+                        width: 100.w,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.asset(
+                            AppAssets.imgDefaultPicture,
+                            height: 60.h,
+                            width: 100.w,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
                 SizedBox(width: 10.h),
                 Expanded(
                   child: Column(
