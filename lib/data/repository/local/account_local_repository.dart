@@ -27,10 +27,14 @@ class AccountLocalRepository {
 
   Future<bool> getIsLogin() async {
     try {
-      bool result = await AppInitConfig.localStorage.user.getSecure(
+      bool? result = await AppInitConfig.localStorage.user.getSecure(
         key: isLogin,
       );
-      return result;
+      if (result != null) {
+        return result;
+      } else {
+        return false;
+      }
     } catch (e) {
       AppLogger.debugLog("[getIsLogin][error] $e");
       return false;
@@ -51,10 +55,14 @@ class AccountLocalRepository {
 
   Future<bool> getIsActivationCodeActive() async {
     try {
-      bool result = await AppInitConfig.localStorage.config.getSecure(
+      bool? result = await AppInitConfig.localStorage.config.getSecure(
         key: isActivationCodeActive,
       );
-      return result;
+      if (result != null){
+        return result;
+      } else {
+        return false;
+      }
     } catch (e) {
       AppLogger.debugLog("[getIsActivationCodeActive][error] $e");
       return false;
