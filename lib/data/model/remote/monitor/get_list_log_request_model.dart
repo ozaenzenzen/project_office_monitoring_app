@@ -1,4 +1,5 @@
 enum TypeAction { refresh, loading }
+
 enum TypeLog { staff, location }
 
 class GetListLogRequestModel {
@@ -16,7 +17,7 @@ class GetListLogRequestModel {
     this.typeAction = TypeAction.refresh,
     this.startDate,
     this.endDate,
-    this.limit,
+    this.limit = 5,
     this.currentPage,
     this.location,
     this.staffUserStamp,
