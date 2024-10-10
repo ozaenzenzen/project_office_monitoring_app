@@ -92,7 +92,7 @@ class MonitorRepository {
         header: header,
       );
       GetListLogResponseModel mappingData = GetListLogResponseModel.fromJson(response.data);
-      AppLogger.debugLog("resp ${jsonEncode(mappingData.toJson())}");
+      // AppLogger.debugLog("resp ${jsonEncode(mappingData.toJson())}");
       return mappingData;
     } catch (errorMessage) {
       AppLogger.debugLog("[MonitorRepository][getListLog] errorMessage $errorMessage");
