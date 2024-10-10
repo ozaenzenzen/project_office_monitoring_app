@@ -128,31 +128,36 @@ class _CapturePageState extends State<CapturePage> {
                                   );
                                 },
                               )
-                        : Container(
-                            height: 240.h,
-                            color: Colors.black26,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Center(
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    color: AppColor.white,
-                                    size: 36.h,
-                                  ),
+                        : (base64Image != null && base64Image != "" && base64Image!.length > 50)
+                            ? Image.memory(
+                                // height: 240.h,
+                                base64Decode(base64Image!),
+                              )
+                            : Container(
+                                height: 240.h,
+                                color: Colors.black26,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Center(
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        color: AppColor.white,
+                                        size: 36.h,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10.h),
+                                    Text(
+                                      "Tekan untuk mengambil gambar / foto",
+                                      style: GoogleFonts.inter(
+                                        fontSize: 12.sp,
+                                        color: AppColor.white,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 10.h),
-                                Text(
-                                  "Tekan untuk mengambil gambar / foto",
-                                  style: GoogleFonts.inter(
-                                    fontSize: 12.sp,
-                                    color: AppColor.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                              ),
                   ),
                   SizedBox(height: 12.h),
                   Padding(
