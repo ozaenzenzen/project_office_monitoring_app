@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_office_monitoring_app/data/repository/local/account_local_repository.dart';
+import 'package:project_office_monitoring_app/data/repository/local/monitor_local_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/local/platform_local_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/account_repository.dart';
 import 'package:project_office_monitoring_app/data/repository/remote/monitor_repository.dart';
@@ -9,6 +10,7 @@ import 'package:project_office_monitoring_app/data/repository/remote/platform_re
 import 'package:project_office_monitoring_app/presentation/page/capture_page/bloc/capture_location_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/detail_location_page/bloc/detail_location_log_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/home_page/get_list_log_local_bloc/get_list_log_local_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_location_bloc/get_log_location_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_staff_bloc/get_log_staff_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/main_page.dart';
@@ -44,6 +46,11 @@ class _MyAppState extends State<MyApp> {
           ),
         ),
         BlocProvider(
+          create: (context) => GetListLogLocalBloc(
+            MonitorLocalRepository(),
+          ),
+        ),
+        BlocProvider(
           create: (context) => PlatformBloc(
             PlatformRepository(),
             AccountLocalRepository(),
@@ -62,6 +69,7 @@ class _MyAppState extends State<MyApp> {
             MonitorRepository(),
             AccountLocalRepository(),
             PlatformLocalRepository(),
+            MonitorLocalRepository(),
           ),
         ),
         BlocProvider(

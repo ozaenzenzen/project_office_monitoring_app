@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:project_office_monitoring_app/data/model/remote/monitor/get_list_log_request_model.dart';
 import 'package:project_office_monitoring_app/presentation/page/capture_page/capture_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/bloc/home_bloc.dart';
+import 'package:project_office_monitoring_app/presentation/page/home_page/get_list_log_local_bloc/get_list_log_local_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/home_page/home_page.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_location_bloc/get_log_location_bloc.dart';
 import 'package:project_office_monitoring_app/presentation/page/log_page/get_log_staff_bloc/get_log_staff_bloc.dart';
@@ -101,6 +102,9 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
             staffUserStamp: true,
           ),
         ),
+      )
+      ..read<GetListLogLocalBloc>().add(
+        GetListLogLocalAction(),
       );
     tabController = TabController(
       vsync: this,
