@@ -227,7 +227,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         return Text(
                           // "Vehicle Log Apps Version 1.0.0+1",
                           // "Vehicle Log Apps Version ${AppInfo.appVersion}",
-                          "Vehicle Log Apps Version ${snapshot.data}",
+                          "Office Monitor App Version ${snapshot.data}",
                           style: AppTheme.theme.textTheme.bodySmall?.copyWith(
                             fontSize: 10.sp,
                             color: Colors.grey,
